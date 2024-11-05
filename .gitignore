@@ -1,0 +1,6 @@
+*extra_material
+executables*
+*.tmp*
+report
+*notes*
+data
