@@ -1,14 +1,82 @@
-version: "3.9"
 services:
+  presto-coordinator:
+    image: prestodb/presto:0.290-edge18
+    container_name: presto-coordinator
+    hostname: presto-coordinator
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./presto-coordinator/configuration:/etc/configuration
+      - ./other_data:/etc/other_data
+      - ./datasources/catalogs:/etc/catalog
+
+  
+  # presto-worker1:
+  #   image: prestodb/presto:0.290-edge18
+  #   container_name: presto-coordinator
+  #   hostname: presto-coordinator
+  #   ports:
+  #     - "8080:8080"
+  #   volumes:
+  #     - ./presto-coordinator:/etc/presto
+  #     - ./other_data:/etc/other_data
+  #     - ./datasources/catalogs:/etc/catalogs
+
+  
+  # presto-worker2:
+  #   image: prestodb/presto:0.290-edge18
+  #   container_name: presto-coordinator
+  #   hostname: presto-coordinator
+  #   ports:
+  #     - "8080:8080"
+  #   volumes:
+  #     - ./presto-coordinator:/etc/presto
+  #     - ./other_data:/etc/other_data
+  #     - ./datasources/catalogs:/etc/catalogs
+
+  
+  # presto-worker3:
+  #   image: prestodb/presto:0.290-edge18
+  #   container_name: presto-coordinator
+  #   hostname: presto-coordinator
+  #   ports:
+  #     - "8080:8080"
+  #   volumes:
+  #     - ./presto-coordinator:/etc/presto
+  #     - ./other_data:/etc/other_data
+  #     - ./datasources/catalogs:/etc/catalogs
+
+
+  # presto-worker4:
+  #   image: prestodb/presto:0.290-edge18
+  #   container_name: presto-coordinator
+  #   hostname: presto-coordinator
+  #   ports:
+  #     - "8080:8080"
+  #   volumes:
+  #     - ./presto-coordinator:/etc/presto
+  #     - ./other_data:/etc/other_data
+  #     - ./datasources/catalogs:/etc/catalogs
+
+
+  # mongo:
+  #   image:
+  #   container_name: mongo
+  #   hostname: mongo
+  #   ports:
+  #     - 
+
+
   # cassandra:
-  #   image: cassandra:latest
+  #   image: cassandra:
   #   container_name: cassandra
   #   hostname: cassandra
   #   ports:
   #     - "9042:9042"
-  
+
+
   # postgres:
-  #   image: postgres:latest
+  #   image: postgres:
   #   container_name: postgres
   #   hostname: postgres
   #   environment:
@@ -17,6 +85,7 @@ services:
   #     POSTFRES_DB: test
   #   ports:
   #     - "5432:5432"
+
 
 networks:
   default:

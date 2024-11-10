@@ -3,4 +3,5 @@ executables*
 *.tmp*
 report
 *notes*
-data
+data/
+other_data
