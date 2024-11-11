@@ -5,98 +5,104 @@ services:
     hostname: presto-coordinator
     ports:
       - "8080:8080"
+    environment:
+      - CATALOG_MANAGEMENT=dynamic
     volumes:
       - ./presto-coordinator/configuration/node.properties:/opt/presto-server/etc/configuration/node.properties
       - ./presto-coordinator/configuration/jvm.config:/opt/presto-server/etc/configuration/jvm.config
       - ./presto-coordinator/configuration/log.properties:/opt/presto-server/etc/configuration/log.properties
       - ./presto-coordinator/configuration/config.properties:/opt/presto-server/etc/configuration/config.properties
       - ./other_data:/opt/presto-server/etc/other_data
-      - ./datasources/catalog:/opt/presto-server/etc/catalog
+      # - ./datasources/catalog:/opt/presto-server/etc/catalog
 
   
-  # presto-worker1:
-  #   image: prestodb/presto:0.290-edge18
-  #   container_name: presto-coordinator
-  #   hostname: presto-coordinator
-  #   ports:
-  #     - "8080:8080"
-  #   volumes:
-  #     - ./presto-coordinator:/etc/presto
-  #     - ./other_data:/etc/other_data
-  #     - ./datasources/catalogs:/etc/catalogs
+  presto-worker1:
+    image: prestodb/presto:0.290-edge18
 
+    container_name: presto-worker1
+    hostname: presto-worker1
+    volumes:
+      - ./presto-workers/worker1/configuration/node.properties:/opt/presto-server/etc/configuration/node.properties
+      - ./presto-workers/worker1/configuration/jvm.config:/opt/presto-server/etc/configuration/jvm.config
+      - ./presto-workers/worker1/configuration/log.properties:/opt/presto-server/etc/configuration/log.properties
+      - ./presto-workers/worker1/configuration/config.properties:/opt/presto-server/etc/configuration/config.properties
+      - ./presto-workers/worker1/other_data:/opt/presto-server/etc/other_data
+      # - ./datasources/catalog:/opt/presto-server/etc/catalog
   
-  # presto-worker2:
-  #   image: prestodb/presto:0.290-edge18
-  #   container_name: presto-coordinator
-  #   hostname: presto-coordinator
-  #   ports:
-  #     - "8080:8080"
-  #   volumes:
-  #     - ./presto-coordinator:/etc/presto
-  #     - ./other_data:/etc/other_data
-  #     - ./datasources/catalogs:/etc/catalogs
-
+  presto-worker2:
+    image: prestodb/presto:0.290-edge18
+    container_name: presto-worker2
+    hostname: presto-worker2
+    volumes:
+      - ./presto-workers/worker2/configuration/node.properties:/opt/presto-server/etc/configuration/node.properties
+      - ./presto-workers/worker2/configuration/jvm.config:/opt/presto-server/etc/configuration/jvm.config
+      - ./presto-workers/worker2/configuration/log.properties:/opt/presto-server/etc/configuration/log.properties
+      - ./presto-workers/worker2/configuration/config.properties:/opt/presto-server/etc/configuration/config.properties
+      - ./presto-workers/worker2/other_data:/opt/presto-server/etc/other_data
+      # - ./datasources/catalog:/opt/presto-server/etc/catalog
+  
   
   # presto-worker3:
   #   image: prestodb/presto:0.290-edge18
-  #   container_name: presto-coordinator
-  #   hostname: presto-coordinator
-  #   ports:
-  #     - "8080:8080"
+  #   container_name: presto-worker3
+  #   hostname: presto-worker3
   #   volumes:
-  #     - ./presto-coordinator:/etc/presto
-  #     - ./other_data:/etc/other_data
-  #     - ./datasources/catalogs:/etc/catalogs
-
-
+  #     - ./presto-workers/worker3/configuration/node.properties:/opt/presto-server/etc/configuration/node.properties
+  #     - ./presto-workers/worker3/configuration/jvm.config:/opt/presto-server/etc/configuration/jvm.config
+  #     - ./presto-workers/worker3/configuration/log.properties:/opt/presto-server/etc/configuration/log.properties
+  #     - ./presto-workers/worker3/configuration/config.properties:/opt/presto-server/etc/configuration/config.properties
+  #     - ./presto-workers/worker3/other_data:/opt/presto-server/etc/other_data
+  #     - ./datasources/catalog:/opt/presto-server/etc/catalog
+  
+  
   # presto-worker4:
   #   image: prestodb/presto:0.290-edge18
-  #   container_name: presto-coordinator
-  #   hostname: presto-coordinator
-  #   ports:
-  #     - "8080:8080"
+  #   container_name: presto-worker4
+  #   hostname: presto-worker4
   #   volumes:
-  #     - ./presto-coordinator:/etc/presto
-  #     - ./other_data:/etc/other_data
-  #     - ./datasources/catalogs:/etc/catalogs
+  #     - ./presto-workers/worker4/configuration/node.properties:/opt/presto-server/etc/configuration/node.properties
+  #     - ./presto-workers/worker4/configuration/jvm.config:/opt/presto-server/etc/configuration/jvm.config
+  #     - ./presto-workers/worker4/configuration/log.properties:/opt/presto-server/etc/configuration/log.properties
+  #     - ./presto-workers/worker4/configuration/config.properties:/opt/presto-server/etc/configuration/config.properties
+  #     - ./presto-workers/worker4/other_data:/opt/presto-server/etc/other_data
+  #     - ./datasources/catalog:/opt/presto-server/etc/catalog
 
 
-  mongo:
-    image: mongo:latest
-    container_name: mongo
-    hostname: mongo
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=root
-    ports:
-      - "27017:27017"
+  # mongo:
+  #   image: mongo:latest
+  #   container_name: mongo
+  #   hostname: mongo
+  #   environment:
+  #     - MONGO_INITDB_ROOT_USERNAME=root
+  #     - MONGO_INITDB_ROOT_PASSWORD=root
+  #   ports:
+  #     - "27017:27017"
 
 
-  cassandra:
-    image: cassandra:5.0.2-jammy
-    container_name: cassandra
-    hostname: cassandra
-    environment:
-      - CASSANDRA_CLUSTER_NAME="test"
-      - CASSANDRA_SEEDS=cassandra
-      - CASSANDRA_PASSWORD_SEEDER=true
-      - CASSANDRA_USERNAME=root
-      - CASSANDRA_PASSWORD=root
-    ports:
-      - "9042:9042"
+  # cassandra:
+  #   image: cassandra:5.0.2-jammy
+  #   container_name: cassandra
+  #   hostname: cassandra
+  #   environment:
+  #     - CASSANDRA_CLUSTER_NAME="test"
+  #     - CASSANDRA_SEEDS=cassandra
+  #     - CASSANDRA_PASSWORD_SEEDER=true
+  #     - CASSANDRA_USERNAME=root
+  #     - CASSANDRA_PASSWORD=root
+  #   ports:
+  #     - "9042:9042"
 
 
-  postgres:
-    image: postgres:17.0
-    container_name: postgres
-    hostname: postgres
-    environment:
-      - POSTGRES_USER=root
-      - POSTGRES_PASSWORD=root
-      - POSTFRES_DB=test
-    ports:
-      - "5432:5432"
+  # postgres:
+  #   image: postgres:17.0
+  #   container_name: postgres
+  #   hostname: postgres
+  #   environment:
+  #     - POSTGRES_USER=root
+  #     - POSTGRES_PASSWORD=root
+  #     - POSTFRES_DB=test
+  #   ports:
+  #     - "5432:5432"
 
 
 networks:
