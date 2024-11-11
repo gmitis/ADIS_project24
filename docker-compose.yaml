@@ -62,32 +62,41 @@ services:
   #     - ./datasources/catalogs:/etc/catalogs
 
 
-  # mongo:
-  #   image:
-  #   container_name: mongo
-  #   hostname: mongo
-  #   ports:
-  #     - "27017:27017"
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    hostname: mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+    ports:
+      - "27017:27017"
 
 
-  # cassandra:
-  #   image: cassandra:5.0.2-jammy
-  #   container_name: cassandra
-  #   hostname: cassandra
-  #   ports:
-  #     - "9042:9042"
+  cassandra:
+    image: cassandra:5.0.2-jammy
+    container_name: cassandra
+    hostname: cassandra
+    environment:
+      - CASSANDRA_CLUSTER_NAME="test"
+      - CASSANDRA_SEEDS=cassandra
+      - CASSANDRA_PASSWORD_SEEDER=true
+      - CASSANDRA_USERNAME=root
+      - CASSANDRA_PASSWORD=root
+    ports:
+      - "9042:9042"
 
 
-  # postgres:
-  #   image: postgres:
-  #   container_name: postgres
-  #   hostname: postgres
-  #   environment:
-  #     POSTGRES_USER: root
-  #     POSTGRES_PASSWORD: root
-  #     POSTFRES_DB: test
-  #   ports:
-  #     - "5432:5432"
+  postgres:
+    image: postgres:17.0
+    container_name: postgres
+    hostname: postgres
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTFRES_DB=test
+    ports:
+      - "5432:5432"
 
 
 networks:
