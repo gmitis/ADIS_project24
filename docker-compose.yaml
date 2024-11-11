@@ -6,9 +6,12 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - ./presto-coordinator/configuration:/etc/configuration
-      - ./other_data:/etc/other_data
-      - ./datasources/catalogs:/etc/catalog
+      - ./presto-coordinator/configuration/node.properties:/opt/presto-server/etc/configuration/node.properties
+      - ./presto-coordinator/configuration/jvm.config:/opt/presto-server/etc/configuration/jvm.config
+      - ./presto-coordinator/configuration/log.properties:/opt/presto-server/etc/configuration/log.properties
+      - ./presto-coordinator/configuration/config.properties:/opt/presto-server/etc/configuration/config.properties
+      - ./other_data:/opt/presto-server/etc/other_data
+      - ./datasources/catalog:/opt/presto-server/etc/catalog
 
   
   # presto-worker1:
@@ -64,11 +67,11 @@ services:
   #   container_name: mongo
   #   hostname: mongo
   #   ports:
-  #     - 
+  #     - "27017:27017"
 
 
   # cassandra:
-  #   image: cassandra:
+  #   image: cassandra:5.0.2-jammy
   #   container_name: cassandra
   #   hostname: cassandra
   #   ports:
