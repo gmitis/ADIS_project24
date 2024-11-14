@@ -1,6 +1,6 @@
 services:
   presto-coordinator:
-    image: prestodb/presto:0.290-edge18
+    image: prestodb/presto:latest
     container_name: presto-coordinator
     hostname: presto-coordinator
     ports:
@@ -8,65 +8,86 @@ services:
     environment:
       - CATALOG_MANAGEMENT=dynamic
     volumes:
-      - ./presto-coordinator/configuration/node.properties:/opt/presto-server/etc/configuration/node.properties
-      - ./presto-coordinator/configuration/jvm.config:/opt/presto-server/etc/configuration/jvm.config
-      - ./presto-coordinator/configuration/log.properties:/opt/presto-server/etc/configuration/log.properties
-      - ./presto-coordinator/configuration/config.properties:/opt/presto-server/etc/configuration/config.properties
+      - ./presto-coordinator/configuration/node.properties:/opt/presto-server/etc/node.properties
+      - ./presto-coordinator/configuration/jvm.config:/opt/presto-server/etc/jvm.config
+      - ./presto-coordinator/configuration/log.properties:/opt/presto-server/etc/log.properties
+      - ./presto-coordinator/configuration/config.properties:/opt/presto-server/etc/config.properties
       - ./other_data:/opt/presto-server/etc/other_data
+      - ./datasources/catalog/tpch.properties:/opt/presto-server/etc/catalog/tpch.properties  # to be deleted after testing
       # - ./datasources/catalog:/opt/presto-server/etc/catalog
+    networks:
+      presto:
+        ipv4_address: 10.18.0.8
+
 
   
   presto-worker1:
-    image: prestodb/presto:0.290-edge18
-
+    image: prestodb/presto:latest
     container_name: presto-worker1
     hostname: presto-worker1
     volumes:
-      - ./presto-workers/worker1/configuration/node.properties:/opt/presto-server/etc/configuration/node.properties
-      - ./presto-workers/worker1/configuration/jvm.config:/opt/presto-server/etc/configuration/jvm.config
-      - ./presto-workers/worker1/configuration/log.properties:/opt/presto-server/etc/configuration/log.properties
-      - ./presto-workers/worker1/configuration/config.properties:/opt/presto-server/etc/configuration/config.properties
+      - ./presto-workers/worker1/configuration/node.properties:/opt/presto-server/etc/node.properties
+      - ./presto-workers/worker1/configuration/jvm.config:/opt/presto-server/etc/jvm.config
+      - ./presto-workers/worker1/configuration/log.properties:/opt/presto-server/etc/log.properties
+      - ./presto-workers/worker1/configuration/config.properties:/opt/presto-server/etc/config.properties
       - ./presto-workers/worker1/other_data:/opt/presto-server/etc/other_data
+      - ./datasources/catalog/tpch.properties:/opt/presto-server/etc/catalog/tpch.properties  # to be deleted after testing
       # - ./datasources/catalog:/opt/presto-server/etc/catalog
+    networks:
+      presto:
+        ipv4_address: 10.18.0.18
+
   
   presto-worker2:
-    image: prestodb/presto:0.290-edge18
+    image: prestodb/presto:latest
     container_name: presto-worker2
     hostname: presto-worker2
     volumes:
-      - ./presto-workers/worker2/configuration/node.properties:/opt/presto-server/etc/configuration/node.properties
-      - ./presto-workers/worker2/configuration/jvm.config:/opt/presto-server/etc/configuration/jvm.config
-      - ./presto-workers/worker2/configuration/log.properties:/opt/presto-server/etc/configuration/log.properties
-      - ./presto-workers/worker2/configuration/config.properties:/opt/presto-server/etc/configuration/config.properties
+      - ./presto-workers/worker2/configuration/node.properties:/opt/presto-server/etc/node.properties
+      - ./presto-workers/worker2/configuration/jvm.config:/opt/presto-server/etc/jvm.config
+      - ./presto-workers/worker2/configuration/log.properties:/opt/presto-server/etc/log.properties
+      - ./presto-workers/worker2/configuration/config.properties:/opt/presto-server/etc/config.properties
       - ./presto-workers/worker2/other_data:/opt/presto-server/etc/other_data
+      - ./datasources/catalog/tpch.properties:/opt/presto-server/etc/catalog/tpch.properties  # to be deleted after testing
       # - ./datasources/catalog:/opt/presto-server/etc/catalog
+    networks:
+      presto:
+        ipv4_address: 10.18.0.28
   
   
-  # presto-worker3:
-  #   image: prestodb/presto:0.290-edge18
-  #   container_name: presto-worker3
-  #   hostname: presto-worker3
-  #   volumes:
-  #     - ./presto-workers/worker3/configuration/node.properties:/opt/presto-server/etc/configuration/node.properties
-  #     - ./presto-workers/worker3/configuration/jvm.config:/opt/presto-server/etc/configuration/jvm.config
-  #     - ./presto-workers/worker3/configuration/log.properties:/opt/presto-server/etc/configuration/log.properties
-  #     - ./presto-workers/worker3/configuration/config.properties:/opt/presto-server/etc/configuration/config.properties
-  #     - ./presto-workers/worker3/other_data:/opt/presto-server/etc/other_data
-  #     - ./datasources/catalog:/opt/presto-server/etc/catalog
+  presto-worker3:
+    image: prestodb/presto:latest
+    container_name: presto-worker3
+    hostname: presto-worker3
+    volumes:
+      - ./presto-workers/worker3/configuration/node.properties:/opt/presto-server/etc/node.properties
+      - ./presto-workers/worker3/configuration/jvm.config:/opt/presto-server/etc/jvm.config
+      - ./presto-workers/worker3/configuration/log.properties:/opt/presto-server/etc/log.properties
+      - ./presto-workers/worker3/configuration/config.properties:/opt/presto-server/etc/config.properties
+      - ./presto-workers/worker3/other_data:/opt/presto-server/etc/other_data
+      - ./datasources/catalog/tpch.properties:/opt/presto-server/etc/catalog/tpch.properties  # to be deleted after testing
+      # - ./datasources/catalog:/opt/presto-server/etc/catalog
+    networks:
+      presto:
+        ipv4_address: 10.18.0.38
   
   
   # presto-worker4:
-  #   image: prestodb/presto:0.290-edge18
+  #   image: prestodb/presto:latest
   #   container_name: presto-worker4
   #   hostname: presto-worker4
   #   volumes:
-  #     - ./presto-workers/worker4/configuration/node.properties:/opt/presto-server/etc/configuration/node.properties
-  #     - ./presto-workers/worker4/configuration/jvm.config:/opt/presto-server/etc/configuration/jvm.config
-  #     - ./presto-workers/worker4/configuration/log.properties:/opt/presto-server/etc/configuration/log.properties
-  #     - ./presto-workers/worker4/configuration/config.properties:/opt/presto-server/etc/configuration/config.properties
+  #     - ./presto-workers/worker4/configuration/node.properties:/opt/presto-server/etc/node.properties
+  #     - ./presto-workers/worker4/configuration/jvm.config:/opt/presto-server/etc/jvm.config
+  #     - ./presto-workers/worker4/configuration/log.properties:/opt/presto-server/etc/log.properties
+  #     - ./presto-workers/worker4/configuration/config.properties:/opt/presto-server/etc/config.properties
   #     - ./presto-workers/worker4/other_data:/opt/presto-server/etc/other_data
-  #     - ./datasources/catalog:/opt/presto-server/etc/catalog
-
+  #     - ./datasources/catalog/tpch.properties:/opt/presto-server/etc/catalog/tpch.properties  # to be deleted after testing
+  #     # - ./datasources/catalog:/opt/presto-server/etc/catalog
+  #   networks:
+  #     presto:
+  #       ipv4_address: 10.18.0.48
+  
 
   # mongo:
   #   image: mongo:latest
@@ -77,6 +98,9 @@ services:
   #     - MONGO_INITDB_ROOT_PASSWORD=root
   #   ports:
   #     - "27017:27017"
+  #   networks:
+  #     presto:
+  #       ipv4_address: 18.10.0.108
 
 
   # cassandra:
@@ -91,6 +115,10 @@ services:
   #     - CASSANDRA_PASSWORD=root
   #   ports:
   #     - "9042:9042"
+  #   networks:
+  #     presto:
+  #       ipv4_address: 18.10.0.118
+
 
 
   # postgres:
@@ -100,11 +128,18 @@ services:
   #   environment:
   #     - POSTGRES_USER=root
   #     - POSTGRES_PASSWORD=root
-  #     - POSTFRES_DB=test
+  #     - POSTGRES_DB=test
   #   ports:
   #     - "5432:5432"
+  #   networks:
+  #     presto:
+  #       ipv4_address: 18.10.0.128
 
 
 networks:
-  default:
+  presto:
     driver: bridge
+    ipam:
+      config:
+        - subnet: 10.18.0.0/24
+          gateway: 10.18.0.1
