@@ -89,51 +89,54 @@ services:
   #       ipv4_address: 10.18.0.48
   
 
-  # mongo:
-  #   image: mongo:latest
-  #   container_name: mongo
-  #   hostname: mongo
-  #   environment:
-  #     - MONGO_INITDB_ROOT_USERNAME=root
-  #     - MONGO_INITDB_ROOT_PASSWORD=root
-  #   ports:
-  #     - "27017:27017"
-  #   networks:
-  #     presto:
-  #       ipv4_address: 18.10.0.108
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    hostname: mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+    ports:
+      - "27017:27017"
+    networks:
+      presto:
+        ipv4_address: 10.18.0.108
 
 
-  # cassandra:
-  #   image: cassandra:5.0.2-jammy
-  #   container_name: cassandra
-  #   hostname: cassandra
-  #   environment:
-  #     - CASSANDRA_CLUSTER_NAME="test"
-  #     - CASSANDRA_SEEDS=cassandra
-  #     - CASSANDRA_PASSWORD_SEEDER=true
-  #     - CASSANDRA_USERNAME=root
-  #     - CASSANDRA_PASSWORD=root
-  #   ports:
-  #     - "9042:9042"
-  #   networks:
-  #     presto:
-  #       ipv4_address: 18.10.0.118
+  cassandra:
+    image: cassandra:5.0.2-jammy
+    container_name: cassandra
+    hostname: cassandra
+    environment:
+      - CASSANDRA_CLUSTER_NAME="test"
+      - CASSANDRA_SEEDS=cassandra
+      - CASSANDRA_PASSWORD_SEEDER=true
+      - CASSANDRA_USERNAME=root
+      - CASSANDRA_PASSWORD=root
+    ports:
+      - "9042:9042"
+    networks:
+      presto:
+        ipv4_address: 10.18.0.118
 
 
 
-  # postgres:
-  #   image: postgres:17.0
-  #   container_name: postgres
-  #   hostname: postgres
-  #   environment:
-  #     - POSTGRES_USER=root
-  #     - POSTGRES_PASSWORD=root
-  #     - POSTGRES_DB=test
-  #   ports:
-  #     - "5432:5432"
-  #   networks:
-  #     presto:
-  #       ipv4_address: 18.10.0.128
+  postgres:
+    image: postgres:17.0
+    container_name: postgres
+    hostname: postgres
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=adis
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./datasources/db_population_scripts/postgres_init.sql:/docker-entrypoint-initdb.d/postgres_init.sql
+      - ./datasources/data/web_site.dat:/var/lib/postgresql/data/web_site.dat
+    networks:
+      presto:
+        ipv4_address: 10.18.0.128
 
 
 networks:
