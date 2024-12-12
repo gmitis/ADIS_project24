@@ -133,7 +133,8 @@ services:
       - "5432:5432"
     volumes:
       - ./datasources/db_population_scripts/postgres_init.sql:/docker-entrypoint-initdb.d/postgres_init.sql
-      - ./datasources/data/web_site.dat:/var/lib/postgresql/data/web_site.dat
+      - postgres_data:/var/lib/postgresql/data
+      - ./Data/postgre_data:/data
     networks:
       presto:
         ipv4_address: 10.18.0.128
@@ -146,3 +147,7 @@ networks:
       config:
         - subnet: 10.18.0.0/24
           gateway: 10.18.0.1
+
+volumes:
+  postgres_data:
+    name: postgres_data
