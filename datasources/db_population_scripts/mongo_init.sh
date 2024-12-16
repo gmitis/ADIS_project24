@@ -1,6 +1,11 @@
-#! bin/bash
+#! /bin/bash
 
-mongoimport --uri="mongodb://root:root@10.18.0.108:27017/?authSource=admin" \
+until mongosh "mongodb://root:root@localhost:27017/?authSource=admin" --eval "db.stats()" > /dev/null 2>&1; do
+    echo "Waiting for MongoDB to start..."
+    sleep 5
+done
+
+mongoimport --uri="mongodb://root:root@localhost:27017/?authSource=admin" \
             --db='adis' \
             --collection='web_page' \
             --type=csv \
