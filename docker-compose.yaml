@@ -13,8 +13,7 @@ services:
       - ./presto-coordinator/configuration/log.properties:/opt/presto-server/etc/log.properties
       - ./presto-coordinator/configuration/config.properties:/opt/presto-server/etc/config.properties
       - ./other_data:/opt/presto-server/etc/other_data
-      - ./datasources/catalog/tpch.properties:/opt/presto-server/etc/catalog/tpch.properties  # to be deleted after testing
-      # - ./datasources/catalog:/opt/presto-server/etc/catalog
+      - ./datasources/catalog:/opt/presto-server/etc/catalog
     networks:
       presto:
         ipv4_address: 10.18.0.8
@@ -29,9 +28,8 @@ services:
       - ./presto-workers/worker1/configuration/jvm.config:/opt/presto-server/etc/jvm.config
       - ./presto-workers/worker1/configuration/log.properties:/opt/presto-server/etc/log.properties
       - ./presto-workers/worker1/configuration/config.properties:/opt/presto-server/etc/config.properties
-      - ./presto-workers/worker1/other_data:/opt/presto-server/etc/other_data
-      - ./datasources/catalog/tpch.properties:/opt/presto-server/etc/catalog/tpch.properties  # to be deleted after testing
-      # - ./datasources/catalog:/opt/presto-server/etc/catalog
+      - ./presto-workers/worker1/other_data:/opt/presto-server/etc
+      - ./datasources/catalog:/opt/presto-server/etc/catalog
     networks:
       presto:
         ipv4_address: 10.18.0.18
@@ -46,9 +44,8 @@ services:
       - ./presto-workers/worker2/configuration/jvm.config:/opt/presto-server/etc/jvm.config
       - ./presto-workers/worker2/configuration/log.properties:/opt/presto-server/etc/log.properties
       - ./presto-workers/worker2/configuration/config.properties:/opt/presto-server/etc/config.properties
-      - ./presto-workers/worker2/other_data:/opt/presto-server/etc/other_data
-      - ./datasources/catalog/tpch.properties:/opt/presto-server/etc/catalog/tpch.properties  # to be deleted after testing
-      # - ./datasources/catalog:/opt/presto-server/etc/catalog
+      - ./presto-workers/worker2/other_data:/opt/presto-server/etc
+      - ./datasources/catalog:/opt/presto-server/etc/catalog
     networks:
       presto:
         ipv4_address: 10.18.0.28
@@ -63,9 +60,8 @@ services:
       - ./presto-workers/worker3/configuration/jvm.config:/opt/presto-server/etc/jvm.config
       - ./presto-workers/worker3/configuration/log.properties:/opt/presto-server/etc/log.properties
       - ./presto-workers/worker3/configuration/config.properties:/opt/presto-server/etc/config.properties
-      - ./presto-workers/worker3/other_data:/opt/presto-server/etc/other_data
-      - ./datasources/catalog/tpch.properties:/opt/presto-server/etc/catalog/tpch.properties  # to be deleted after testing
-      # - ./datasources/catalog:/opt/presto-server/etc/catalog
+      - ./presto-workers/worker3/other_data:/opt/presto-server/etc
+      - ./datasources/catalog:/opt/presto-server/etc/catalog
     networks:
       presto:
         ipv4_address: 10.18.0.38
@@ -81,7 +77,6 @@ services:
   #     - ./presto-workers/worker4/configuration/log.properties:/opt/presto-server/etc/log.properties
   #     - ./presto-workers/worker4/configuration/config.properties:/opt/presto-server/etc/config.properties
   #     - ./presto-workers/worker4/other_data:/opt/presto-server/etc/other_data
-  #     - ./datasources/catalog/tpch.properties:/opt/presto-server/etc/catalog/tpch.properties  # to be deleted after testing
   #     # - ./datasources/catalog:/opt/presto-server/etc/catalog
   #   networks:
   #     presto:
@@ -156,7 +151,7 @@ services:
     volumes:
       - ./datasources/db_population_scripts/postgres_init.sql:/docker-entrypoint-initdb.d/postgres_init.sql
       - postgres_data:/var/lib/postgresql/data
-      - ./Data/postgre_data:/data
+      - ./data/postgre_data:/data
     networks:
       presto:
         ipv4_address: 10.18.0.128
