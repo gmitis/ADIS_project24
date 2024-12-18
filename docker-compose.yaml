@@ -127,7 +127,7 @@ services:
         ipv4_address: 10.18.0.118
 
 
-  cassandra-load:
+  cassandra-load-keyspace:
     container_name: cassandra-load-keyspace
     image: cassandra:5.0.2-jammy
     depends_on:
