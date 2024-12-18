@@ -132,15 +132,19 @@ services:
         ipv4_address: 10.18.0.118
 
 
-  # cassandra-load-keyspace:
-  #   container_name: cassandra-load-keyspace
-  #   image: cassandra:5.0.2-jammy
-  #   depends_on:
-  #     cassandra:
-  #       condition: service_healthy
-  #   volumes:
-  #     - ./datasources/db_population_scripts/cassandra_tables.cql:/cassandra_tables.cql
-  #   command: /bin/bash -c "echo Loading Cassandra keyspace && cqlsh 10.18.0.118 9042 --file cassandra_tables.cql"
+  cassandra-load:
+    container_name: cassandra-load-keyspace
+    image: cassandra:5.0.2-jammy
+    depends_on:
+      cassandra:
+        condition: service_healthy
+    volumes:
+      - ./datasources/db_population_scripts/cassandra_tables.cql:/cassandra_tables.cql
+      - ./data/cassandra_data:/data
+    command: /bin/bash -c "echo Loading cassandra keyspace && cqlsh 10.18.0.118 -f /cassandra_tables.cql"
+    networks:
+      presto:
+        ipv4_address: 10.18.0.119
 
 
   postgres:
