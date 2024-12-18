@@ -1,4 +1,5 @@
--- create keyspace adis with replication={'class':'SimpleStrategy', 'replication_factor': 1};
+create keyspace adis with replication={'class':'SimpleStrategy', 'replication_factor': 1};
+use adis;
 
 -- Create the table `web_page` in Cassandra
 CREATE TABLE web_page (
