@@ -5,8 +5,8 @@ use adis;
 CREATE TABLE web_page (
     wp_web_page_sk            INT, 
     wp_web_page_id            TEXT,                     
-    wp_rec_start_date         DATE,                       
-    wp_rec_end_date           DATE,
+    wp_rec_start_date         TIMESTAMP,                       
+    wp_rec_end_date           TIMESTAMP,
     wp_creation_date_sk       INT,
     wp_access_date_sk         INT,
     wp_autogen_flag           TEXT,                      
