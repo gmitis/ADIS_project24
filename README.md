@@ -14,18 +14,21 @@ select * from adis.web_page limit 10;
 ```
 ### MongoDB:
 
+Added this lines of code inside mongo_init.sh after db launch to create a user inside the adis database of mongo before importing data
+
 ```bash
-docker-compose up --build --force-recreate mongo
-docker exec -it mongo mongosh -u root -p root
+mongosh "mongodb://root:root@localhost:27017/?authSource=admin" <<EOF
 use adis;
-db.web_page.find().limit(10);
+db.createUser({
+ user: "adis_user",
+ pwd: "adis_password",
+ roles: [{ role: "readWrite", db: "adis" }]
+});
+EOF
 ```
 
-### PostgreSQL:
+Updated the mongo credentials in the file mongodb.properties to correspond to the user created inside the database "adis"
 
 ```bash
-docker-compose up --build --force-recreate postgres
-docker exec -it postgres psql -U root adis
-select * from web_page limit 10;
-
+mongodb.credentials=adis_user:adis_password@adis
 ```

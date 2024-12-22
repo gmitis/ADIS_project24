@@ -1,8 +1,8 @@
 #!/bin/bash
 
-TOOLS_DIR="/home/ubuntu/adis_experimental/ADIS_project24/DSGen/tools"
-TEMPLATES_DIR="/home/ubuntu/adis_experimental/ADIS_project24/DSGen/query_templates"  # Replace with the actual path to query templates
-OUTPUT_DIR="/home/ubuntu/adis_experimental/ADIS_project24/queries"             # Replace with the desired output directory
+TOOLS_DIR="/home/ubuntu/ADIS_project24/DSGen/tools"
+TEMPLATES_DIR="/home/ubuntu/ADIS_project24/DSGen/query_templates"  # Replace with the actual path to query templates
+OUTPUT_DIR="/home/ubuntu/ADIS_project24/queries"             # Replace with the desired output directory
 DIALECT="ansi"                           # Dialect for the queries
 SCALE=10   
 
