@@ -140,7 +140,7 @@ CREATE TABLE web_sales (
 );
 
 -- Load data into tables using .dat files
-COPY web_site FROM '/data/web_site.dat' WITH (FORMAT csv, DELIMITER '|');
-COPY web_page FROM '/data/web_page.dat' WITH (FORMAT csv, DELIMITER '|');
-COPY web_returns FROM '/data/web_returns.dat' WITH (FORMAT csv, DELIMITER '|');
-COPY web_sales FROM '/data/web_sales.dat' WITH (FORMAT csv, DELIMITER '|');
+COPY web_page FROM '/data/web_page.csv' WITH (FORMAT csv, DELIMITER ',');
+-- COPY web_site FROM '/data/web_site.csv' WITH (FORMAT csv, DELIMITER ',');
+-- COPY web_returns FROM '/data/web_returns.csv' WITH (FORMAT csv, DELIMITER ',');
+-- COPY web_sales FROM '/data/web_sales.csv' WITH (FORMAT csv, DELIMITER ',');

@@ -5,9 +5,20 @@ until mongosh "mongodb://root:root@localhost:27017/?authSource=admin" --eval "db
     sleep 5
 done
 
+mongosh "mongodb://root:root@localhost:27017/?authSource=admin" <<EOF
+use adis;
+db.createUser({
+ user: "adis_user",
+ pwd: "adis_password",
+ roles: [{ role: "readWrite", db: "adis" }]
+});
+EOF
+
 mongoimport --uri="mongodb://root:root@localhost:27017/?authSource=admin" \
             --db='adis' \
-            --collection='web_page' \
+            --collection='income_band' \
             --type=csv \
-            --file=/mongo_data/web_page.csv \
-            --fields="wp_web_page_sk, wp_web_page_id, wp_rec_start_date, wp_rec_end_date, wp_creation_date_sk, wp_access_date_sk, wp_autogen_flag, wp_customer_sk, wp_url, wp_type, wp_char_count, wp_link_count, wp_image_count, wp_max_ad_count" 
+            --file=/mongo_data/income_band.csv \
+            --fields="ib_income_band_sk, ib_lower_bound, ib_upper_bound" 
+
+echo "MongoDB initialization completed."
