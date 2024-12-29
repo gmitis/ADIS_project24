@@ -8,6 +8,7 @@ fi
 
 # Input file
 input_file="$1"
+cd ~/ADIS_project24/data/original_data
 
 # Check if the file exists
 if [ ! -f "$input_file" ]; then
@@ -22,6 +23,6 @@ temp_file="${input_file}.tmp"
 sed 's/|$//' "$input_file" > "$temp_file"
 
 # Replace the original file with the modified content
-mv "$temp_file" "$input_file"
+mv "$temp_file" ~/ADIS_project24/data/csv_data/$input_file
 
 echo "Last character removed from every line of '$input_file'."
