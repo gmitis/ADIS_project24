@@ -17,4 +17,4 @@ create table web_page
     primary key (wp_web_page_sk)
 );
 
-copy web_page from '/home/ubuntu/ADIS_project24/data/csv_data/web_page.csv' with (format csv, delimiter ',');
+copy web_page from '/data/web_page.csv' with (format csv, delimiter ',');

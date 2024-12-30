@@ -9,4 +9,4 @@ create table ship_mode
     primary key (sm_ship_mode_sk)
 );
 
-copy ship_mode from '/home/ubuntu/ADIS_project24/data/csv_data/ship_mode.csv' with (format csv, delimiter ',');
+copy ship_mode from '/data/ship_mode.csv' with (format csv, delimiter ',');

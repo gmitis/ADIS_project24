@@ -6,4 +6,4 @@ create table income_band
     primary key (ib_income_band_sk)
 );
 
-copy income_band from '/home/ubuntu/ADIS_project24/data/csv_data/income_band.csv' with (format csv, delimiter ',');
+copy income_band from '/data/income_band.csv' with (format csv, delimiter ',');

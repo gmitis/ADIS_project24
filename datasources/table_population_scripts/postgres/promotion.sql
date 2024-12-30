@@ -22,4 +22,4 @@ create table promotion
     primary key (p_promo_sk)
 );
 
-copy promotion from '/home/ubuntu/ADIS_project24/data/csv_data/promotion.csv' with (format csv, delimiter ',');
+copy promotion from '/data/promotion.csv' with (format csv, delimiter ',');

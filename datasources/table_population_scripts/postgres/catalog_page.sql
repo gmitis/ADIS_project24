@@ -12,4 +12,4 @@ create table catalog_page
     primary key (cp_catalog_page_sk)
 );
 
-copy catalog_page from '/home/ubuntu/ADIS_project24/data/csv_data/catalog_page.csv' with (format csv, delimiter ',');
+copy catalog_page from '/data/catalog_page.csv' with (format csv, delimiter ',');

@@ -27,4 +27,4 @@ create table web_returns
     primary key (wr_item_sk, wr_order_number)
 );
 
-copy web_returns from '/home/ubuntu/ADIS_project24/data/csv_data/web_returns.csv' with (format csv, delimiter ',');
+copy web_returns from '/data/web_returns.csv' with (format csv, delimiter ',');

@@ -37,4 +37,4 @@ create table catalog_sales
     primary key (cs_item_sk, cs_order_number)
 );
 
-copy catalog_sales from '/home/ubuntu/ADIS_project24/data/csv_data/catalog_sales.csv' with (format csv, delimiter ',');
+copy catalog_sales from '/data/catalog_sales.csv' with (format csv, delimiter ',');

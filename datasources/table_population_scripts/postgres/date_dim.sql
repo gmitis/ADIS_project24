@@ -31,4 +31,4 @@ create table date_dim
     primary key (d_date_sk)
 );
 
-copy date_dim from '/home/ubuntu/ADIS_project24/data/csv_data/date_dim.csv' with (format csv, delimiter ',');
+copy date_dim from '/data/date_dim.csv' with (format csv, delimiter ',');

@@ -30,4 +30,4 @@ create table catalog_returns
     primary key (cr_item_sk, cr_order_number)
 );
 
-copy catalog_returns from '/home/ubuntu/ADIS_project24/data/csv_data/catalog_returns.csv' with (format csv, delimiter ',');
+copy catalog_returns from '/data/catalog_returns.csv' with (format csv, delimiter ',');

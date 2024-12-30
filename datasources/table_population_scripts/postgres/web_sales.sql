@@ -37,4 +37,4 @@ create table web_sales
     primary key (ws_item_sk, ws_order_number)
 );
 
-copy web_sales from '/home/ubuntu/ADIS_project24/data/csv_data/web_sales.csv' with (format csv, delimiter ',');
+copy web_sales from '/data/web_sales.csv' with (format csv, delimiter ',');

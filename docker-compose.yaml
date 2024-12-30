@@ -93,7 +93,7 @@ services:
     ports:
       - "27017:27017"
     volumes:
-      - ./datasources/db_population_scripts/mongo_init.sh:/docker-entrypoint-initdb.d/mongo_init.sh
+      - ./datasources/db_population_scripts/mongo_populate.sh:/docker-entrypoint-initdb.d/mongo_populate.sh
       - ./data/mongo_data:/mongo_data
       - mongo_data:/data/db
     networks:
@@ -116,7 +116,7 @@ services:
     volumes:
       - cassandra_data:/var/lib/cassandra 
       - ./data/cassandra_data:/data
-      - ./datasources/db_population_scripts/cassandra_tables.cql:/cassandra_tables.cql
+      - ./datasources/db_population_scripts/cassandra_populate.cql:/cassandra_populate.cql
     healthcheck:
       test: ["CMD", "cqlsh", "-u root", "-p root", "-e describe keyspaces"]
       interval: 15s
@@ -134,9 +134,9 @@ services:
       cassandra:
         condition: service_healthy
     volumes:
-      - ./datasources/db_population_scripts/cassandra_tables.cql:/cassandra_tables.cql
+      - ./datasources/db_population_scripts/cassandra_populate.cql:/cassandra_populate.cql
       - ./data/cassandra_data:/data
-    command: /bin/bash -c "echo Loading cassandra keyspace && cqlsh 10.18.0.118 -f /cassandra_tables.cql"
+    command: /bin/bash -c "echo Loading cassandra keyspace && cqlsh 10.18.0.118 -f /cassandra_populate.cql"
     networks:
       presto:
         ipv4_address: 10.18.0.119
@@ -153,7 +153,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - ./datasources/db_population_scripts/postgres_init.sql:/docker-entrypoint-initdb.d/postgres_init.sql
+      - ./datasources/db_population_scripts/postgres_populate.sql:/docker-entrypoint-initdb.d/postgres_populate.sql
       - postgres_data:/var/lib/postgresql/data
       - ./data/postgre_data:/data
     networks:

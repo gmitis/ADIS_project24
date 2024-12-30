@@ -6,4 +6,4 @@ create table reason
     primary key (r_reason_sk)
 );
 
-copy reason from '/home/ubuntu/ADIS_project24/data/csv_data/reason.csv' with (format csv, delimiter ',');
+copy reason from '/data/reason.csv' with (format csv, delimiter ',');

@@ -12,4 +12,4 @@ create table customer_demographics
     primary key (cd_demo_sk)
 );
 
-copy customer_demographics from '/home/ubuntu/ADIS_project24/data/csv_data/customer_demographics.csv' with (format csv, delimiter ',');
+copy customer_demographics from '/data/customer_demographics.csv' with (format csv, delimiter ',');

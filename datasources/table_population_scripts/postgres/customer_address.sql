@@ -16,4 +16,4 @@ create table customer_address
     primary key (ca_address_sk)
 );
 
-copy customer_address from '/home/ubuntu/ADIS_project24/data/csv_data/customer_address.csv' with (format csv, delimiter ',');
+copy customer_address from '/data/customer_address.csv' with (format csv, delimiter ',');

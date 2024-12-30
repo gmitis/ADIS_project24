@@ -8,4 +8,4 @@ create table household_demographics
     primary key (hd_demo_sk)
 );
 
-copy household_demographics from '/home/ubuntu/ADIS_project24/data/csv_data/household_demographics.csv' with (format csv, delimiter ',');
+copy household_demographics from '/data/household_demographics.csv' with (format csv, delimiter ',');

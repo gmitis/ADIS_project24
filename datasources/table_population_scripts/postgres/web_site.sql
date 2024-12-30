@@ -29,4 +29,4 @@ create table web_site
     primary key (web_site_sk)
 );
 
-copy web_site from '/home/ubuntu/ADIS_project24/data/csv_data/web_site.csv' with (format csv, delimiter ',');
+copy web_site from '/data/web_site.csv' with (format csv, delimiter ',');

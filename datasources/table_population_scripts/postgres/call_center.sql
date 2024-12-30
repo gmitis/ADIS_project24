@@ -34,4 +34,4 @@ create table call_center
     primary key (cc_call_center_sk)
 );
 
-copy call_center from '/home/ubuntu/ADIS_project24/data/csv_data/call_center.csv' with (format csv, delimiter ',');
+copy call_center from '/data/call_center.csv' with (format csv, delimiter ',');

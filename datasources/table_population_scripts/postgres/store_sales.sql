@@ -26,4 +26,4 @@ create table store_sales
     primary key (ss_item_sk, ss_ticket_number)
 );
 
-copy store_sales from '/home/ubuntu/ADIS_project24/data/csv_data/store_sales.csv' with (format csv, delimiter ',');
+copy store_sales from '/data/store_sales.csv' with (format csv, delimiter ',');

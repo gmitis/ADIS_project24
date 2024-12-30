@@ -25,4 +25,4 @@ create table item
     primary key (i_item_sk)
 );
 
-copy item from '/home/ubuntu/ADIS_project24/data/csv_data/item.csv' with (format csv, delimiter ',');
+copy item from '/data/item.csv' with (format csv, delimiter ',');

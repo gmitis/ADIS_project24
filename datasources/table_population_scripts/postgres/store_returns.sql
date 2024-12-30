@@ -23,4 +23,4 @@ create table store_returns
     primary key (sr_item_sk, sr_ticket_number)
 );
 
-copy store_returns from '/home/ubuntu/ADIS_project24/data/csv_data/store_returns.csv' with (format csv, delimiter ',');
+copy store_returns from '/data/store_returns.csv' with (format csv, delimiter ',');
