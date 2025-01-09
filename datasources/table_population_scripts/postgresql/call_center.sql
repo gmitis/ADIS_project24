@@ -1,4 +1,4 @@
-create table call_center
+create unlogged table call_center
 (
     cc_call_center_sk         integer               not null,
     cc_call_center_id         char(16)              not null,
@@ -33,5 +33,5 @@ create table call_center
     cc_tax_percentage         decimal(5,2)                  ,
     primary key (cc_call_center_sk)
 );
-
 copy call_center from '/data/call_center.csv' with (format csv, delimiter ',');
+

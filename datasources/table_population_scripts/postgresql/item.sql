@@ -1,4 +1,4 @@
-create table item
+create unlogged table item
 (
     i_item_sk                 integer               not null,
     i_item_id                 char(16)              not null,
@@ -24,5 +24,5 @@ create table item
     i_product_name            char(50)                      ,
     primary key (i_item_sk)
 );
-
 copy item from '/data/item.csv' with (format csv, delimiter ',');
+

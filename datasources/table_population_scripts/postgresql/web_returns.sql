@@ -1,4 +1,4 @@
-create table web_returns
+create unlogged table web_returns
 (
     wr_returned_date_sk       integer                       ,
     wr_returned_time_sk       integer                       ,
@@ -26,5 +26,5 @@ create table web_returns
     wr_net_loss               decimal(7,2)                  ,
     primary key (wr_item_sk, wr_order_number)
 );
-
 copy web_returns from '/data/web_returns.csv' with (format csv, delimiter ',');
+

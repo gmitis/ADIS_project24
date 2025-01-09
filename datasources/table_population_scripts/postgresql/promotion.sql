@@ -1,4 +1,4 @@
-create table promotion
+create unlogged table promotion
 (
     p_promo_sk                integer               not null,
     p_promo_id                char(16)              not null,
@@ -21,5 +21,5 @@ create table promotion
     p_discount_active         char(1)                       ,
     primary key (p_promo_sk)
 );
-
 copy promotion from '/data/promotion.csv' with (format csv, delimiter ',');
+

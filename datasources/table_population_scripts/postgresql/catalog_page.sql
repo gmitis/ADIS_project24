@@ -1,4 +1,4 @@
-create table catalog_page
+create unlogged table catalog_page
 (
     cp_catalog_page_sk        integer               not null,
     cp_catalog_page_id        char(16)              not null,
@@ -11,5 +11,5 @@ create table catalog_page
     cp_type                   varchar(100)                  ,
     primary key (cp_catalog_page_sk)
 );
-
 copy catalog_page from '/data/catalog_page.csv' with (format csv, delimiter ',');
+

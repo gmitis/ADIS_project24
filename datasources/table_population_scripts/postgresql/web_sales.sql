@@ -1,4 +1,4 @@
-create table web_sales
+create unlogged table web_sales
 (
     ws_sold_date_sk           integer                       ,
     ws_sold_time_sk           integer                       ,
@@ -36,5 +36,5 @@ create table web_sales
     ws_net_profit             decimal(7,2)                  ,
     primary key (ws_item_sk, ws_order_number)
 );
-
 copy web_sales from '/data/web_sales.csv' with (format csv, delimiter ',');
+

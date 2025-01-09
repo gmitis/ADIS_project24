@@ -1,4 +1,4 @@
-create table catalog_returns
+create unlogged table catalog_returns
 (
     cr_returned_date_sk       integer                       ,
     cr_returned_time_sk       integer                       ,
@@ -29,5 +29,5 @@ create table catalog_returns
     cr_net_loss               decimal(7,2)                  ,
     primary key (cr_item_sk, cr_order_number)
 );
-
 copy catalog_returns from '/data/catalog_returns.csv' with (format csv, delimiter ',');
+

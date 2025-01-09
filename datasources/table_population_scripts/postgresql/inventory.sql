@@ -1,4 +1,4 @@
-create table inventory
+create unlogged table inventory
 (
     inv_date_sk               integer               not null,
     inv_item_sk               integer               not null,
@@ -6,5 +6,5 @@ create table inventory
     inv_quantity_on_hand      integer                       ,
     primary key (inv_date_sk, inv_item_sk, inv_warehouse_sk)
 );
-
 copy inventory from '/data/inventory.csv' with (format csv, delimiter ',');
+

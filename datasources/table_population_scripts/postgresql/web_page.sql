@@ -1,4 +1,4 @@
-create table web_page
+create unlogged table web_page
 (
     wp_web_page_sk            integer               not null,
     wp_web_page_id            char(16)              not null,
@@ -16,5 +16,5 @@ create table web_page
     wp_max_ad_count           integer                       ,
     primary key (wp_web_page_sk)
 );
-
 copy web_page from '/data/web_page.csv' with (format csv, delimiter ',');
+

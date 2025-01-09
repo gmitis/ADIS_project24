@@ -1,4 +1,4 @@
-create table customer_demographics
+create unlogged table customer_demographics
 (
     cd_demo_sk                integer               not null,
     cd_gender                 char(1)                       ,
@@ -11,5 +11,5 @@ create table customer_demographics
     cd_dep_college_count      integer                       ,
     primary key (cd_demo_sk)
 );
-
 copy customer_demographics from '/data/customer_demographics.csv' with (format csv, delimiter ',');
+

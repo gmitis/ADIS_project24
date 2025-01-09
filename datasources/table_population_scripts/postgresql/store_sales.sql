@@ -1,4 +1,4 @@
-create table store_sales
+create unlogged table store_sales
 (
     ss_sold_date_sk           integer                       ,
     ss_sold_time_sk           integer                       ,
@@ -25,5 +25,5 @@ create table store_sales
     ss_net_profit             decimal(7,2)                  ,
     primary key (ss_item_sk, ss_ticket_number)
 );
-
 copy store_sales from '/data/store_sales.csv' with (format csv, delimiter ',');
+

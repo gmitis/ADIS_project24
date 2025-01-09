@@ -1,4 +1,4 @@
-create table web_site
+create unlogged table web_site
 (
     web_site_sk               integer               not null,
     web_site_id               char(16)              not null,
@@ -28,5 +28,5 @@ create table web_site
     web_tax_percentage        decimal(5,2)                  ,
     primary key (web_site_sk)
 );
-
 copy web_site from '/data/web_site.csv' with (format csv, delimiter ',');
+

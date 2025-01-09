@@ -1,4 +1,4 @@
-create table ship_mode
+create unlogged table ship_mode
 (
     sm_ship_mode_sk           integer               not null,
     sm_ship_mode_id           char(16)              not null,
@@ -8,5 +8,5 @@ create table ship_mode
     sm_contract               char(20)                      ,
     primary key (sm_ship_mode_sk)
 );
-
 copy ship_mode from '/data/ship_mode.csv' with (format csv, delimiter ',');
+

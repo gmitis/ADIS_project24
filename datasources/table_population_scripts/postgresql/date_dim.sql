@@ -1,4 +1,4 @@
-create table date_dim
+create unlogged table date_dim
 (
     d_date_sk                 integer               not null,
     d_date_id                 char(16)              not null,
@@ -30,5 +30,5 @@ create table date_dim
     d_current_year            char(1)                       ,
     primary key (d_date_sk)
 );
-
 copy date_dim from '/data/date_dim.csv' with (format csv, delimiter ',');
+

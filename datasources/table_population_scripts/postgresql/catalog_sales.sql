@@ -1,4 +1,4 @@
-create table catalog_sales
+create unlogged table catalog_sales
 (
     cs_sold_date_sk           integer                       ,
     cs_sold_time_sk           integer                       ,
@@ -36,5 +36,5 @@ create table catalog_sales
     cs_net_profit             decimal(7,2)                  ,
     primary key (cs_item_sk, cs_order_number)
 );
-
 copy catalog_sales from '/data/catalog_sales.csv' with (format csv, delimiter ',');
+

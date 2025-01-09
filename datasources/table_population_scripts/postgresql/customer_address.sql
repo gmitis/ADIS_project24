@@ -1,4 +1,4 @@
-create table customer_address
+create unlogged table customer_address
 (
     ca_address_sk             integer               not null,
     ca_address_id             char(16)              not null,
@@ -15,5 +15,5 @@ create table customer_address
     ca_location_type          char(20)                      ,
     primary key (ca_address_sk)
 );
-
 copy customer_address from '/data/customer_address.csv' with (format csv, delimiter ',');
+

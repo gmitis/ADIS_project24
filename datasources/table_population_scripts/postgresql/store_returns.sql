@@ -1,4 +1,4 @@
-create table store_returns
+create unlogged table store_returns
 (
     sr_returned_date_sk       integer                       ,
     sr_return_time_sk         integer                       ,
@@ -22,5 +22,5 @@ create table store_returns
     sr_net_loss               decimal(7,2)                  ,
     primary key (sr_item_sk, sr_ticket_number)
 );
-
 copy store_returns from '/data/store_returns.csv' with (format csv, delimiter ',');
+
