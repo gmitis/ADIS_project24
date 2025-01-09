@@ -6,3 +6,4 @@ report
 data/
 other_data
 DSGen/
+datasources/db_population_scripts/*
