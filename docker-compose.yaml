@@ -155,7 +155,7 @@ services:
     volumes:
       - ./datasources/db_population_scripts/postgres_populate.sql:/docker-entrypoint-initdb.d/postgres_populate.sql
       - postgres_data:/var/lib/postgresql/data
-      - ./data/postgre_data:/data
+      - ./data/csv_data:/data
     networks:
       presto:
         ipv4_address: 10.18.0.128
