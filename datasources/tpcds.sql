@@ -585,4 +585,3 @@ create table store_sales
     ss_net_profit             decimal(7,2)                  ,
     primary key (ss_item_sk, ss_ticket_number)
 );
-
