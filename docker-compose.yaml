@@ -115,7 +115,7 @@ services:
       - "9042:9042"
     volumes:
       - cassandra_data:/var/lib/cassandra 
-      - ./data/cassandra_data:/data
+      - ./data/csv_data:/data
       - ./datasources/db_population_scripts/cassandra_populate.cql:/cassandra_populate.cql
     healthcheck:
       test: ["CMD", "cqlsh", "-u root", "-p root", "-e describe keyspaces"]
@@ -135,14 +135,14 @@ services:
         condition: service_healthy
     volumes:
       - ./datasources/db_population_scripts/cassandra_populate.cql:/cassandra_populate.cql
-      - ./data/cassandra_data:/data
+      - ./data/csv_data:/data
     command: /bin/bash -c "echo Loading cassandra keyspace && cqlsh 10.18.0.118 -f /cassandra_populate.cql"
     networks:
       presto:
         ipv4_address: 10.18.0.119
 
 
-  postgres:
+  postgres: 
     image: postgres:17.0
     container_name: postgres
     hostname: postgres
