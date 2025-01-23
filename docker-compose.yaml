@@ -22,11 +22,13 @@ services:
     image: prestodb/presto:latest
     container_name: presto-worker1
     hostname: presto-worker1
+    ports:
+      - "8081:8080"
     volumes:
-      - ./presto-workers/node.properties:/opt/presto-server/etc/node.properties
-      - ./presto-workers/jvm.config:/opt/presto-server/etc/jvm.config
-      - ./presto-workers/log.properties:/opt/presto-server/etc/log.properties
-      - ./presto-workers/config.properties:/opt/presto-server/etc/config.properties
+      - ./presto-workers/worker1/node.properties:/opt/presto-server/etc/node.properties
+      - ./presto-workers/worker1/jvm.config:/opt/presto-server/etc/jvm.config
+      - ./presto-workers/worker1/log.properties:/opt/presto-server/etc/log.properties
+      - ./presto-workers/worker1/config.properties:/opt/presto-server/etc/config.properties
       - ./datasources/catalog:/opt/presto-server/etc/catalog
     networks:
       presto:
@@ -37,11 +39,13 @@ services:
     image: prestodb/presto:latest
     container_name: presto-worker2
     hostname: presto-worker2
+    ports:
+      - "8082:8080"
     volumes:
-      - ./presto-workers/node.properties:/opt/presto-server/etc/node.properties
-      - ./presto-workers/jvm.config:/opt/presto-server/etc/jvm.config
-      - ./presto-workers/log.properties:/opt/presto-server/etc/log.properties
-      - ./presto-workers/config.properties:/opt/presto-server/etc/config.properties
+      - ./presto-workers/worker2/node.properties:/opt/presto-server/etc/node.properties
+      - ./presto-workers/worker2/jvm.config:/opt/presto-server/etc/jvm.config
+      - ./presto-workers/worker2/log.properties:/opt/presto-server/etc/log.properties
+      - ./presto-workers/worker2/config.properties:/opt/presto-server/etc/config.properties
       - ./datasources/catalog:/opt/presto-server/etc/catalog
     networks:
       presto:
@@ -52,30 +56,17 @@ services:
     image: prestodb/presto:latest
     container_name: presto-worker3
     hostname: presto-worker3
+    ports:
+      - "8083:8080"
     volumes:
-      - ./presto-workers/node.properties:/opt/presto-server/etc/node.properties
-      - ./presto-workers/jvm.config:/opt/presto-server/etc/jvm.config
-      - ./presto-workers/log.properties:/opt/presto-server/etc/log.properties
-      - ./presto-workers/config.properties:/opt/presto-server/etc/config.properties
+      - ./presto-workers/worker3/node.properties:/opt/presto-server/etc/node.properties
+      - ./presto-workers/worker3/jvm.config:/opt/presto-server/etc/jvm.config
+      - ./presto-workers/worker3/log.properties:/opt/presto-server/etc/log.properties
+      - ./presto-workers/worker3/config.properties:/opt/presto-server/etc/config.properties
       - ./datasources/catalog:/opt/presto-server/etc/catalog
     networks:
       presto:
         ipv4_address: 10.18.0.38
-  
-  
-  presto-worker4:
-    image: prestodb/presto:latest
-    container_name: presto-worker4
-    hostname: presto-worker4
-    volumes:
-      - ./presto-workers/node.properties:/opt/presto-server/etc/node.properties
-      - ./presto-workers/jvm.config:/opt/presto-server/etc/jvm.config
-      - ./presto-workers/log.properties:/opt/presto-server/etc/log.properties
-      - ./presto-workers/config.properties:/opt/presto-server/etc/config.properties
-      - ./datasources/catalog:/opt/presto-server/etc/catalog
-    networks:
-      presto:
-        ipv4_address: 10.18.0.48
   
 
   mongo:
