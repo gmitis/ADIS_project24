@@ -177,7 +177,7 @@ services:
     volumes:
       - ./datasources/db_population_scripts/cassandra_populate.cql:/cassandra_populate.cql
       - ./data/csv_data:/data
-    command: /bin/bash -c "echo Loading cassandra keyspace && cqlsh 10.18.0.118 -f /cassandra_populate.cql"
+    command: /bin/bash -c "echo Loading cassandra keyspace && cqlsh cassandra -f /cassandra_populate.cql"
     deploy:                                                                       
       placement:
         constraints:
