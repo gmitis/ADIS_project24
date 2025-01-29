@@ -23,8 +23,6 @@ services:
           - node.labels.role == initial
     networks:
       - presto-network
-      #presto:
-        #ipv4_address: 10.18.0.8
 
 
   presto-worker1:
@@ -33,8 +31,6 @@ services:
     hostname: presto-worker1
     ports:
       - "8081:8080"
-    extra_hosts:
-      - "presto-coordinator:127.0.0.1"
     volumes:
       - ./presto-workers/worker1/configuration/node.properties:/opt/presto-server/etc/node.properties
       - ./presto-workers/worker1/configuration/jvm.config:/opt/presto-server/etc/jvm.config
@@ -50,8 +46,6 @@ services:
           - node.labels.role == initial
     networks:
       - presto-network
-      #presto:
-        #ipv4_address: 10.18.0.18
 
   
   presto-worker2:
@@ -60,8 +54,6 @@ services:
     hostname: presto-worker2
     ports:
       - "8082:8080"
-    extra_hosts:
-      - "presto-coordinator:127.0.0.1"
     volumes:
       - ./presto-workers/worker2/configuration/node.properties:/opt/presto-server/etc/node.properties
       - ./presto-workers/worker2/configuration/jvm.config:/opt/presto-server/etc/jvm.config
@@ -77,8 +69,6 @@ services:
           - node.labels.role == nested
     networks:
       - presto-network
-      #presto:
-        #ipv4_address: 10.18.0.28
   
   
   presto-worker3:
@@ -87,8 +77,6 @@ services:
     hostname: presto-worker3
     ports:
       - "8083:8080"
-    extra_hosts:
-      - "presto-coordinator:127.0.0.1"
     volumes:
       - ./presto-workers/worker3/configuration/node.properties:/opt/presto-server/etc/node.properties
       - ./presto-workers/worker3/configuration/jvm.config:/opt/presto-server/etc/jvm.config
@@ -104,8 +92,6 @@ services:
           - node.labels.role == nested
     networks:
       - presto-network
-      #presto:
-        #ipv4_address: 10.18.0.38
   
 
   mongo:
@@ -130,8 +116,6 @@ services:
           - node.labels.role == nested
     networks:
       - presto-network
-      #presto:
-        #ipv4_address: 10.18.0.108
 
 
   cassandra:
@@ -164,8 +148,6 @@ services:
           - node.labels.role == initial
     networks:
       - presto-network
-      #presto:
-        #ipv4_address: 10.18.0.118
 
 
   cassandra-load-keyspace:
@@ -173,7 +155,6 @@ services:
     image: cassandra:5.0.2-jammy
     depends_on:
       - cassandra
-        #condition: service_healthy
     volumes:
       - ./datasources/db_population_scripts/cassandra_populate.cql:/cassandra_populate.cql
       - ./data/csv_data:/data
@@ -184,8 +165,6 @@ services:
           - node.labels.role == initial
     networks:
       - presto-network
-      #presto:
-        #ipv4_address: 10.18.0.119
 
 
   postgres: 
@@ -211,19 +190,13 @@ services:
           - node.labels.role == nested
     networks:
       - presto-network
-      #presto:
-        #ipv4_address: 10.18.0.128
 
 
 networks:
   presto-network:
-    external: true
-  #presto:
-    #driver: bridge
-    #ipam:
-      #config:
-        #- subnet: 10.18.0.0/24
-          #gateway: 10.18.0.1
+    driver: overlay
+    attachable: true 
+
 
 volumes:
   postgres_data:

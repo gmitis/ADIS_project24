@@ -165,11 +165,11 @@ docker service logs <service-name>
 #restart a service 
 
 docker service update --force <service-name>
+docker service ps --no-trunc <service-name>     # more verborse error printing
 
 #to restart the stack 
 
-docker stack rm presto-cluster
-docker stack deploy -c docker-compose.yaml presto-cluster
+docker stack rm cluster && docker stack deploy -c docker-compose.yaml cluster
 
 #auta exw kanei mexri twra. Ante na ta kanoume na milane twra
 ```
