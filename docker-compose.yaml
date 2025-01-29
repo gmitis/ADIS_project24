@@ -8,14 +8,23 @@ services:
     environment:
       - CATALOG_MANAGEMENT=dynamic
     volumes:
-      - ./presto-coordinator/node.properties:/opt/presto-server/etc/node.properties
-      - ./presto-coordinator/jvm.config:/opt/presto-server/etc/jvm.config
-      - ./presto-coordinator/log.properties:/opt/presto-server/etc/log.properties
-      - ./presto-coordinator/config.properties:/opt/presto-server/etc/config.properties
+      - ./presto-coordinator/configuration/node.properties:/opt/presto-server/etc/node.properties
+      - ./presto-coordinator/configuration/jvm.config:/opt/presto-server/etc/jvm.config
+      - ./presto-coordinator/configuration/log.properties:/opt/presto-server/etc/log.properties
+      - ./presto-coordinator/configuration/config.properties:/opt/presto-server/etc/config.properties
+      - ./other_data:/opt/presto-server/etc/other_data
       - ./datasources/catalog:/opt/presto-server/etc/catalog
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints:
+          - node.labels.role == initial
     networks:
-      presto:
-        ipv4_address: 10.18.0.8
+      - presto-network
+      #presto:
+        #ipv4_address: 10.18.0.8
 
 
   presto-worker1:
@@ -24,15 +33,25 @@ services:
     hostname: presto-worker1
     ports:
       - "8081:8080"
+    extra_hosts:
+      - "presto-coordinator:127.0.0.1"
     volumes:
-      - ./presto-workers/worker1/node.properties:/opt/presto-server/etc/node.properties
-      - ./presto-workers/worker1/jvm.config:/opt/presto-server/etc/jvm.config
-      - ./presto-workers/worker1/log.properties:/opt/presto-server/etc/log.properties
-      - ./presto-workers/worker1/config.properties:/opt/presto-server/etc/config.properties
+      - ./presto-workers/worker1/configuration/node.properties:/opt/presto-server/etc/node.properties
+      - ./presto-workers/worker1/configuration/jvm.config:/opt/presto-server/etc/jvm.config
+      - ./presto-workers/worker1/configuration/log.properties:/opt/presto-server/etc/log.properties
+      - ./presto-workers/worker1/configuration/config.properties:/opt/presto-server/etc/config.properties
       - ./datasources/catalog:/opt/presto-server/etc/catalog
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints:
+          - node.labels.role == initial
     networks:
-      presto:
-        ipv4_address: 10.18.0.18
+      - presto-network
+      #presto:
+        #ipv4_address: 10.18.0.18
 
   
   presto-worker2:
@@ -41,15 +60,25 @@ services:
     hostname: presto-worker2
     ports:
       - "8082:8080"
+    extra_hosts:
+      - "presto-coordinator:127.0.0.1"
     volumes:
-      - ./presto-workers/worker2/node.properties:/opt/presto-server/etc/node.properties
-      - ./presto-workers/worker2/jvm.config:/opt/presto-server/etc/jvm.config
-      - ./presto-workers/worker2/log.properties:/opt/presto-server/etc/log.properties
-      - ./presto-workers/worker2/config.properties:/opt/presto-server/etc/config.properties
+      - ./presto-workers/worker2/configuration/node.properties:/opt/presto-server/etc/node.properties
+      - ./presto-workers/worker2/configuration/jvm.config:/opt/presto-server/etc/jvm.config
+      - ./presto-workers/worker2/configuration/log.properties:/opt/presto-server/etc/log.properties
+      - ./presto-workers/worker2/configuration/config.properties:/opt/presto-server/etc/config.properties
       - ./datasources/catalog:/opt/presto-server/etc/catalog
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints:
+          - node.labels.role == nested
     networks:
-      presto:
-        ipv4_address: 10.18.0.28
+      - presto-network
+      #presto:
+        #ipv4_address: 10.18.0.28
   
   
   presto-worker3:
@@ -58,15 +87,25 @@ services:
     hostname: presto-worker3
     ports:
       - "8083:8080"
+    extra_hosts:
+      - "presto-coordinator:127.0.0.1"
     volumes:
-      - ./presto-workers/worker3/node.properties:/opt/presto-server/etc/node.properties
-      - ./presto-workers/worker3/jvm.config:/opt/presto-server/etc/jvm.config
-      - ./presto-workers/worker3/log.properties:/opt/presto-server/etc/log.properties
-      - ./presto-workers/worker3/config.properties:/opt/presto-server/etc/config.properties
+      - ./presto-workers/worker3/configuration/node.properties:/opt/presto-server/etc/node.properties
+      - ./presto-workers/worker3/configuration/jvm.config:/opt/presto-server/etc/jvm.config
+      - ./presto-workers/worker3/configuration/log.properties:/opt/presto-server/etc/log.properties
+      - ./presto-workers/worker3/configuration/config.properties:/opt/presto-server/etc/config.properties
       - ./datasources/catalog:/opt/presto-server/etc/catalog
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints:
+          - node.labels.role == nested
     networks:
-      presto:
-        ipv4_address: 10.18.0.38
+      - presto-network
+      #presto:
+        #ipv4_address: 10.18.0.38
   
 
   mongo:
@@ -82,9 +121,17 @@ services:
       - ./datasources/db_population_scripts/mongo_populate.sh:/docker-entrypoint-initdb.d/mongo_populate.sh
       - ./data/csv_data:/mongo_data
       - mongo_data:/data/db
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints:
+          - node.labels.role == nested
     networks:
-      presto:
-        ipv4_address: 10.18.0.108
+      - presto-network
+      #presto:
+        #ipv4_address: 10.18.0.108
 
 
   cassandra:
@@ -108,24 +155,37 @@ services:
       interval: 15s
       timeout: 10s
       retries: 10
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints:
+          - node.labels.role == initial
     networks:
-      presto:
-        ipv4_address: 10.18.0.118
+      - presto-network
+      #presto:
+        #ipv4_address: 10.18.0.118
 
 
   cassandra-load-keyspace:
     container_name: cassandra-load-keyspace
     image: cassandra:5.0.2-jammy
     depends_on:
-      cassandra:
-        condition: service_healthy
+      - cassandra
+        #condition: service_healthy
     volumes:
       - ./datasources/db_population_scripts/cassandra_populate.cql:/cassandra_populate.cql
       - ./data/csv_data:/data
     command: /bin/bash -c "echo Loading cassandra keyspace && cqlsh 10.18.0.118 -f /cassandra_populate.cql"
+    deploy:                                                                       
+      placement:
+        constraints:
+          - node.labels.role == initial
     networks:
-      presto:
-        ipv4_address: 10.18.0.119
+      - presto-network
+      #presto:
+        #ipv4_address: 10.18.0.119
 
 
   postgres: 
@@ -142,18 +202,28 @@ services:
       - ./datasources/db_population_scripts/postgres_populate.sql:/docker-entrypoint-initdb.d/postgres_populate.sql
       - postgres_data:/var/lib/postgresql/data
       - ./data/csv_data:/data
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints:
+          - node.labels.role == nested
     networks:
-      presto:
-        ipv4_address: 10.18.0.128
+      - presto-network
+      #presto:
+        #ipv4_address: 10.18.0.128
 
 
 networks:
-  presto:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 10.18.0.0/24
-          gateway: 10.18.0.1
+  presto-network:
+    external: true
+  #presto:
+    #driver: bridge
+    #ipam:
+      #config:
+        #- subnet: 10.18.0.0/24
+          #gateway: 10.18.0.1
 
 volumes:
   postgres_data:

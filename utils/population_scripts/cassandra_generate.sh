@@ -37,7 +37,7 @@ create_population_script () {
     belongs_in_list "$@"
 
     # iterate over all arguements and put the output into a single population file
-    rm "$output_file" && cp "$init_script" "$output_file"
+    rm "$output_file" ; cp "$init_script" "$output_file"
     for arg in "$@"; do
         cat "$tables_definition"/"$arg".cql >> "$output_file"
         printf "\n" >> "$output_file"
