@@ -7,4 +7,4 @@ data/
 other_data
 DSGen/
 datasources/db_population_scripts/*
-presto-coordinator/nodes.json
+*log*
