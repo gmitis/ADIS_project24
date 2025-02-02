@@ -6,8 +6,8 @@ with  cross_items as
      ,iss.i_class_id class_id
      ,iss.i_category_id category_id
  from store_sales
-     ,postgresql.adis.item iss
-     ,postgresql.adis.date_dim d1
+     ,item iss
+     ,date_dim d1
  where ss_item_sk = iss.i_item_sk
    and ss_sold_date_sk = d1.d_date_sk
    and d1.d_year between 1998 AND 1998 + 2
@@ -16,8 +16,8 @@ with  cross_items as
      ,ics.i_class_id
      ,ics.i_category_id
  from catalog_sales
-     ,postgresql.adis.item ics
-     ,postgresql.adis.date_dim d2
+     ,item ics
+     ,date_dim d2
  where cs_item_sk = ics.i_item_sk
    and cs_sold_date_sk = d2.d_date_sk
    and d2.d_year between 1998 AND 1998 + 2
@@ -26,8 +26,8 @@ with  cross_items as
      ,iws.i_class_id
      ,iws.i_category_id
  from web_sales
-     ,postgresql.adis.item iws
-     ,postgresql.adis.date_dim d3
+     ,item iws
+     ,date_dim d3
  where ws_item_sk = iws.i_item_sk
    and ws_sold_date_sk = d3.d_date_sk
    and d3.d_year between 1998 AND 1998 + 2)
@@ -107,8 +107,8 @@ with  cross_items as
      ,iss.i_class_id class_id
      ,iss.i_category_id category_id
  from store_sales
-     ,postgresql.adis.item iss
-     ,postgresql.adis.date_dim d1
+     ,item iss
+     ,date_dim d1
  where ss_item_sk = iss.i_item_sk
    and ss_sold_date_sk = d1.d_date_sk
    and d1.d_year between 1998 AND 1998 + 2
@@ -117,8 +117,8 @@ with  cross_items as
      ,ics.i_class_id
      ,ics.i_category_id
  from catalog_sales
-     ,postgresql.adis.item ics
-     ,postgresql.adis.date_dim d2
+     ,item ics
+     ,date_dim d2
  where cs_item_sk = ics.i_item_sk
    and cs_sold_date_sk = d2.d_date_sk
    and d2.d_year between 1998 AND 1998 + 2
@@ -127,8 +127,8 @@ with  cross_items as
      ,iws.i_class_id
      ,iws.i_category_id
  from web_sales
-     ,postgresql.adis.item iws
-     ,postgresql.adis.date_dim d3
+     ,item iws
+     ,date_dim d3
  where ws_item_sk = iws.i_item_sk
    and ws_sold_date_sk = d3.d_date_sk
    and d3.d_year between 1998 AND 1998 + 2) x
