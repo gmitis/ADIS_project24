@@ -35,6 +35,16 @@ docker exec -it presto-coordinator bash
 ./opt/presto-cli --server localhost:8080 --catalog postgresql --schema public --execute "show tables;"
 ```
 
+### Workers
+```bash
+docker exec -it presto-coordinator bash
+
+./opt/presto-cli --catalog system --schema runtime --execute "select * from nodes;"
+
+
+```
+
+
 ## Produce scripts to populate DBs:
 
 Step 1: Copy created tpc-ds dataset into ~/ADIS_project24/data/original_data directory
@@ -57,7 +67,15 @@ scp -r ubuntu@snf-77013.ok-kno.grnetcloud.net:~/ADIS_project24/data ~/ADIS_proje
 # create actual population file that docker is going to initialize the database with 
 # see name of tables in ~/ADIS_project24/data/tables_catalog.txt 
 # with "*" you include all of the tables
-./utils/population_script_generate/postgresql_generate.sh table_name1 table_name2 ... | all
+
+#FIRST COMBINATION
+
+./utils/population_scripts/postgresql_generate.sh store_sales catalog_sales web_sales date_dim item warehouse time_dim store web_site customer_demographics
+
+./utils/population_scripts/mongodb_generate.sh customer customer_address household_demographics income_band promotion web_page call_center dbgen_version catalog_page
+
+./utils/population_scripts/cassandra_generate.sh inventory store_returns web_returns catalog_returns reason ship_mode
+
 ```
 
 Step 3: Now run the postgres container and it will be populated automatically
@@ -68,58 +86,136 @@ docker-compose down -v && \
 docker-compose up -d --build --force-recreate postgres
 ```
 
-## Docker Swarm Setup:
+## Test presto with queries
+
+```bash
+./opt/presto-cli --catalog {db} --schema {schema} --file {./opt/presto-server/etc/queries/query{number}.sql}
+```
+
+## DOCKER SWARM SETUP:
 ```bash
 
 #First set up passwordless ssh connection to nestedVM
+
 #Establish reverse SSH tunnel to nestedVM
+
 ssh -f -N -R 2377:localhost:2377 ubuntu@snf-77020
+ssh -f -N -R 2377:localhost:2377 ubuntu@snf-77898
 
 #Make It Persistent at Startup
-crontab -e 
 
-#and then add the following: 
+crontab -e 
+#and then add the following from machine adis1: 
 @reboot ssh -f -N -R 2377:localhost:2377 ubuntu@snf-77020
+@reboot ssh -f -N -R 2377:localhost:2377 ubuntu@snf-77898
+
 
 #Now if the initialVM is up then it is connected to the nestedVM through this tunnel 
+
 #Secondly we initialize the Docker Swarm
-docker swarm init --advertise-addr "$initial_vm_ipv6"
+
+docker swarm init --advertise-addr <initial_vm_ip>
+
+#now the docker swarm is created and the manager node is the initialVM
 
 #now use this command to get the worker join token
+
 docker swarm join-token worker
 
 #after you get the token use this command on the nestedVM
-docker swarm join --token "$worker-token" "$manager_ipv6":2377
+
+docker swarm join --token <worker-token> localhost:2377
 
 #After both of the nodes are connected apply labels to each
-docker node update --label-add role=adis1 snf-77013
-docker node update --label-add role=adis2 snf-77898
-docker node update --label-add role=adis3 snf-77016
-docker node update --label-add role=adis4 snf-77020
+
+docker node update --label-add role=initial snf-77016
+docker node update --label-add role=nested snf-77020
+
+#Thirdly initialize the overlay network called presto-network on the initialVM
+
+docker network create --driver overlay --attachable presto-network
+
+#Now you must modify docker-compose.yaml as such:
+#you add this after every container except cassandra keyspace so that they automatically restart if failed and to run on specific machines.
+
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints:
+          - node.labels.role == initial
+          #here the role is either initial or nested based on where you want to run what
+    networks:
+      - presto-network
+
+#for cassandra keyspace add this 
+
+    deploy:                   
+      placement:
+        constraints:
+          - node.labels.role == initial
+    networks:
+      - presto-network
+
+#Also at the end of docker-compose.yaml specify the overlay network used
+
+    networks:
+    presto-network:
+        external: true
+
+#Also change to every catalog file 
+
+cassandra.contact-points= cassandra
+mongodb.seeds=mongo:27017
+connection-url=jdbc:postgresql://postgres:5432/adis
+
+#Also change the discovery uri of coordinator and every worker you have on the same VM to this 
+
+discovery.uri=http://presto-coordinator:8080
+
+#for workers on the nested VM so far I have changed their discovery uri to this 
+
+discovery.uri=http://localhost:2377
+
+#and added this to their docker-compose.yaml containers
+
+    extra_hosts:
+      - "presto-coordinator:127.0.0.1"
 
 #Finally to check the docker swarm nodes health use this
+
 docker node ls
 
 #this command checks the services used in docker
+
 docker service ls
 
 #this command shows the networks used in docker
+
 docker network ls
 
 #this command starts the stack of containers from the initialVM
-#it starts all the containers together and shares them across all nodes (machines) and checks to run each container on the corresponding machine.
+
 docker stack deploy -c docker-compose.yaml cluster
 
-#follow logs of a service
-docker service logs "$service_name" -f
+#it starts all the containers together and shares them across all nodes (machines) and checks to run each container on the corresponding machine.
+
+#check logs of a service
+
+docker service logs <service-name>
 
 #restart a service 
-docker service update --force "$service_name"
-#restart a service with more verborse error printing
-docker service ps --no-trunc "$service_name"    
+
+docker service update --force <service-name>
+docker service ps --no-trunc <service-name>     # more verborse error printing
 
 # remove everything
 docker stack rm cluster && docker volume prune -f 
+
+#auta exw kanei mexri twra. Ante na ta kanoume na milane twra
 ```
 
-
+so far:
+works ->cassandra, postgres, presto-worker1 
+doesn't work -> mongo

@@ -14,23 +14,22 @@ services:
       - ./presto-coordinator/configuration/config.properties:/opt/presto-server/etc/config.properties
       - ./other_data:/opt/presto-server/etc/other_data
       - ./datasources/catalog:/opt/presto-server/etc/catalog
+      - ./queries:/opt/presto-server/etc/queries
     deploy:
       replicas: 1
-      restart_policy:
-        condition: on-failure
+      # restart_policy:
+      #   condition: on-failure
       placement:
         constraints:
-          - node.labels.role == initial
+          - node.labels.role == adis1
     networks:
-      - presto-network
+      - presto
 
 
   presto-worker1:
     image: prestodb/presto:latest
     container_name: presto-worker1
     hostname: presto-worker1
-    ports:
-      - "8081:8080"
     volumes:
       - ./presto-workers/worker1/configuration/node.properties:/opt/presto-server/etc/node.properties
       - ./presto-workers/worker1/configuration/jvm.config:/opt/presto-server/etc/jvm.config
@@ -39,21 +38,19 @@ services:
       - ./datasources/catalog:/opt/presto-server/etc/catalog
     deploy:
       replicas: 1
-      restart_policy:
-        condition: on-failure
+      # restart_policy:
+      #   condition: on-failure
       placement:
         constraints:
-          - node.labels.role == initial
+          - node.labels.role == adis2
     networks:
-      - presto-network
+      - presto
 
   
   presto-worker2:
     image: prestodb/presto:latest
     container_name: presto-worker2
     hostname: presto-worker2
-    ports:
-      - "8082:8080"
     volumes:
       - ./presto-workers/worker2/configuration/node.properties:/opt/presto-server/etc/node.properties
       - ./presto-workers/worker2/configuration/jvm.config:/opt/presto-server/etc/jvm.config
@@ -62,21 +59,19 @@ services:
       - ./datasources/catalog:/opt/presto-server/etc/catalog
     deploy:
       replicas: 1
-      restart_policy:
-        condition: on-failure
+      # restart_policy:
+      #   condition: on-failure
       placement:
         constraints:
-          - node.labels.role == nested
+          - node.labels.role == adis3
     networks:
-      - presto-network
+      - presto
   
   
   presto-worker3:
     image: prestodb/presto:latest
     container_name: presto-worker3
     hostname: presto-worker3
-    ports:
-      - "8083:8080"
     volumes:
       - ./presto-workers/worker3/configuration/node.properties:/opt/presto-server/etc/node.properties
       - ./presto-workers/worker3/configuration/jvm.config:/opt/presto-server/etc/jvm.config
@@ -85,13 +80,13 @@ services:
       - ./datasources/catalog:/opt/presto-server/etc/catalog
     deploy:
       replicas: 1
-      restart_policy:
-        condition: on-failure
+      # restart_policy:
+      #   condition: on-failure
       placement:
         constraints:
-          - node.labels.role == nested
+          - node.labels.role == adis4
     networks:
-      - presto-network
+      - presto
   
 
   mongo:
@@ -106,16 +101,16 @@ services:
     volumes:
       - ./datasources/db_population_scripts/mongo_populate.sh:/docker-entrypoint-initdb.d/mongo_populate.sh
       - ./data/csv_data:/mongo_data
-      - mongo_data:/data/db
+      # - mongo_data:/data/db
     deploy:
       replicas: 1
-      restart_policy:
-        condition: on-failure
+      # restart_policy:
+      #   condition: on-failure
       placement:
         constraints:
-          - node.labels.role == nested
+          - node.labels.role == adis2
     networks:
-      - presto-network
+      - presto
 
 
   cassandra:
@@ -131,7 +126,7 @@ services:
     ports:
       - "9042:9042"
     volumes:
-      - cassandra_data:/var/lib/cassandra 
+      # - cassandra_data:/var/lib/cassandra 
       - ./data/csv_data:/data
       - ./datasources/db_population_scripts/cassandra_populate.cql:/cassandra_populate.cql
     healthcheck:
@@ -141,13 +136,13 @@ services:
       retries: 10
     deploy:
       replicas: 1
-      restart_policy:
-        condition: on-failure
+      # restart_policy:
+      #   condition: on-failure
       placement:
         constraints:
-          - node.labels.role == initial
+          - node.labels.role == adis3
     networks:
-      - presto-network
+      - presto
 
 
   cassandra-load-keyspace:
@@ -162,9 +157,9 @@ services:
     deploy:                                                                       
       placement:
         constraints:
-          - node.labels.role == initial
+          - node.labels.role == adis3
     networks:
-      - presto-network
+      - presto
 
 
   postgres: 
@@ -179,21 +174,21 @@ services:
       - "5432:5432"
     volumes:
       - ./datasources/db_population_scripts/postgres_populate.sql:/docker-entrypoint-initdb.d/postgres_populate.sql
-      - postgres_data:/var/lib/postgresql/data
+      # - postgres_data:/var/lib/postgresql/data
       - ./data/csv_data:/data
     deploy:
       replicas: 1
-      restart_policy:
-        condition: on-failure
+      # restart_policy:
+      #   condition: on-failure
       placement:
         constraints:
-          - node.labels.role == nested
+          - node.labels.role == adis4
     networks:
-      - presto-network
+      - presto
 
 
 networks:
-  presto-network:
+  presto:
     driver: overlay
     attachable: true 
 
