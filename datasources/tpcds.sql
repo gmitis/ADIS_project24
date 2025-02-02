@@ -60,7 +60,7 @@ create table customer_address
 );
 
 create table customer_demographics
-(2
+(
     cd_demo_sk                integer               not null,
     cd_gender                 char(1)                       ,
     cd_marital_status         char(1)                       ,
