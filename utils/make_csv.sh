@@ -35,6 +35,10 @@ while IFS= read -r input_file; do
     sed 's/|/,/g' "$original_data"/"$input_file" > "$output_file" 
 
     echo "Replaced '|' with ',' in '$input_file' and saved as '$output_file'."
+
+    # Delete the original .dat file
+    rm -f "$original_data"/"$input_file"
+    echo "Deleted original file: '$input_file'"
 done < "$tables_catalog"
 
 # remove .dat ending from list of tables
