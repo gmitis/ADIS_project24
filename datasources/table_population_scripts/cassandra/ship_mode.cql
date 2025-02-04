@@ -10,5 +10,5 @@ create table ship_mode
 );
 COPY ship_mode(sm_ship_mode_sk,sm_ship_mode_id,sm_type,sm_code,sm_carrier,sm_contract)
 FROM '/data/ship_mode.csv'
-WITH HEADER=TRUE AND NULL='';
+WITH NULL='';
 

@@ -13,5 +13,5 @@ create table customer_demographics
 );
 COPY customer_demographics(cd_demo_sk,cd_gender,cd_marital_status,cd_education_status,cd_purchase_estimate,cd_credit_rating,cd_dep_count,cd_dep_employed_count,cd_dep_college_count)
 FROM '/data/customer_demographics.csv'
-WITH HEADER=TRUE AND NULL='';
+WITH NULL='';
 

@@ -17,5 +17,5 @@ create table customer_address
 );
 COPY customer_address(ca_address_sk,ca_address_id,ca_street_number,ca_street_name,ca_street_type,ca_suite_number,ca_city,ca_county,ca_state,ca_zip,ca_country,ca_gmt_offset,ca_location_type)
 FROM '/data/customer_address.csv'
-WITH HEADER=TRUE AND NULL='';
+WITH NULL='';
 

@@ -7,5 +7,5 @@ create table income_band
 );
 COPY income_band(ib_income_band_sk,ib_lower_bound,ib_upper_bound)
 FROM '/data/income_band.csv'
-WITH HEADER=TRUE AND NULL='';
+WITH NULL='';
 
