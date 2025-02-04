@@ -2,7 +2,7 @@
 select  i_item_id
        ,i_item_desc
        ,i_current_price
- from postgresql.public.item, cassandra.adis.inventory, postgresql.public.date_dim, postgresql.public.catalog_sales
+ from item, inventory, date_dim, catalog_sales
  where i_current_price between 22 and 22 + 30
  and inv_item_sk = i_item_sk
  and d_date_sk=inv_date_sk

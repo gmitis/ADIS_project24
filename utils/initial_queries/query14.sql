@@ -3,16 +3,16 @@ with
     select
       i_item_sk ss_item_sk
     from
-      postgresql.public.item,
+      item,
       (
         select
           iss.i_brand_id brand_id,
           iss.i_class_id class_id,
           iss.i_category_id category_id
         from
-          postgresql.public.store_sales,
-          postgresql.public.item iss,
-          postgresql.public.date_dim d1
+          store_sales,
+          item iss,
+          date_dim d1
         where
           ss_item_sk = iss.i_item_sk
           and ss_sold_date_sk = d1.d_date_sk
@@ -23,9 +23,9 @@ with
           ics.i_class_id,
           ics.i_category_id
         from
-          postgresql.public.catalog_sales,
-          postgresql.public.item ics,
-          postgresql.public.date_dim d2
+          catalog_sales,
+          item ics,
+          date_dim d2
         where
           cs_item_sk = ics.i_item_sk
           and cs_sold_date_sk = d2.d_date_sk
@@ -36,9 +36,9 @@ with
           iws.i_class_id,
           iws.i_category_id
         from
-          postgresql.public.web_sales,
-          postgresql.public.item iws,
-          postgresql.public.date_dim d3
+          web_sales,
+          item iws,
+          date_dim d3
         where
           ws_item_sk = iws.i_item_sk
           and ws_sold_date_sk = d3.d_date_sk
@@ -58,8 +58,8 @@ with
           ss_quantity quantity,
           ss_list_price list_price
         from
-          postgresql.public.store_sales,
-          postgresql.public.date_dim
+          store_sales,
+          date_dim
         where
           ss_sold_date_sk = d_date_sk
           and d_year between 1998 and 1998  + 2
@@ -68,8 +68,8 @@ with
           cs_quantity quantity,
           cs_list_price list_price
         from
-          postgresql.public.catalog_sales,
-          postgresql.public.date_dim
+          catalog_sales,
+          date_dim
         where
           cs_sold_date_sk = d_date_sk
           and d_year between 1998 and 1998  + 2
@@ -78,8 +78,8 @@ with
           ws_quantity quantity,
           ws_list_price list_price
         from
-          postgresql.public.web_sales,
-          postgresql.public.date_dim
+          web_sales,
+          date_dim
         where
           ws_sold_date_sk = d_date_sk
           and d_year between 1998 and 1998  + 2
@@ -102,9 +102,9 @@ from
       sum(ss_quantity * ss_list_price) sales,
       count(*) number_sales
     from
-      postgresql.public.store_sales,
-      postgresql.public.item,
-      postgresql.public.date_dim
+      store_sales,
+      item,
+      date_dim
     where
       ss_item_sk in (
         select
@@ -136,9 +136,9 @@ from
       sum(cs_quantity * cs_list_price) sales,
       count(*) number_sales
     from
-      postgresql.public.catalog_sales,
-      postgresql.public.item,
-      postgresql.public.date_dim
+      catalog_sales,
+      item,
+      date_dim
     where
       cs_item_sk in (
         select
@@ -170,9 +170,9 @@ from
       sum(ws_quantity * ws_list_price) sales,
       count(*) number_sales
     from
-      postgresql.public.web_sales,
-      postgresql.public.item,
-      postgresql.public.date_dim
+      web_sales,
+      item,
+      date_dim
     where
       ws_item_sk in (
         select
@@ -211,16 +211,16 @@ with
     select
       i_item_sk ss_item_sk
     from
-      postgresql.public.item,
+      item,
       (
         select
           iss.i_brand_id brand_id,
           iss.i_class_id class_id,
           iss.i_category_id category_id
         from
-          postgresql.public.store_sales,
-          postgresql.public.item iss,
-          postgresql.public.date_dim d1
+          store_sales,
+          item iss,
+          date_dim d1
         where
           ss_item_sk = iss.i_item_sk
           and ss_sold_date_sk = d1.d_date_sk
@@ -231,9 +231,9 @@ with
           ics.i_class_id,
           ics.i_category_id
         from
-          postgresql.public.catalog_sales,
-          postgresql.public.item ics,
-          postgresql.public.date_dim d2
+          catalog_sales,
+          item ics,
+          date_dim d2
         where
           cs_item_sk = ics.i_item_sk
           and cs_sold_date_sk = d2.d_date_sk
@@ -244,9 +244,9 @@ with
           iws.i_class_id,
           iws.i_category_id
         from
-          postgresql.public.web_sales,
-          postgresql.public.item iws,
-          postgresql.public.date_dim d3
+          web_sales,
+          item iws,
+          date_dim d3
         where
           ws_item_sk = iws.i_item_sk
           and ws_sold_date_sk = d3.d_date_sk
@@ -266,8 +266,8 @@ with
           ss_quantity quantity,
           ss_list_price list_price
         from
-          postgresql.public.store_sales,
-          postgresql.public.date_dim
+          store_sales,
+          date_dim
         where
           ss_sold_date_sk = d_date_sk
           and d_year between 1998 and 1998  + 2
@@ -276,8 +276,8 @@ with
           cs_quantity quantity,
           cs_list_price list_price
         from
-          postgresql.public.catalog_sales,
-          postgresql.public.date_dim
+          catalog_sales,
+          date_dim
         where
           cs_sold_date_sk = d_date_sk
           and d_year between 1998 and 1998  + 2
@@ -286,8 +286,8 @@ with
           ws_quantity quantity,
           ws_list_price list_price
         from
-          postgresql.public.web_sales,
-          postgresql.public.date_dim
+          web_sales,
+          date_dim
         where
           ws_sold_date_sk = d_date_sk
           and d_year between 1998 and 1998  + 2
@@ -316,9 +316,9 @@ from
       sum(ss_quantity * ss_list_price) sales,
       count(*) number_sales
     from
-      postgresql.public.store_sales,
-      postgresql.public.item,
-      postgresql.public.date_dim
+      store_sales,
+      item,
+      date_dim
     where
       ss_item_sk in (
         select
@@ -332,7 +332,7 @@ from
         select
           d_week_seq
         from
-          postgresql.public.date_dim
+          date_dim
         where
           d_year = 1998 + 1
           and d_moy = 12
@@ -359,9 +359,9 @@ from
       sum(ss_quantity * ss_list_price) sales,
       count(*) number_sales
     from
-      postgresql.public.store_sales,
-      postgresql.public.item,
-      postgresql.public.date_dim
+      store_sales,
+      item,
+      date_dim
     where
       ss_item_sk in (
         select
@@ -375,7 +375,7 @@ from
         select
           d_week_seq
         from
-          postgresql.public.date_dim
+          date_dim
         where
           d_year = 1998
           and d_moy = 12

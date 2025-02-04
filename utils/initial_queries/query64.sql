@@ -2,8 +2,8 @@
 with cs_ui as
  (select cs_item_sk
         ,sum(cs_ext_list_price) as sale,sum(cr_refunded_cash+cr_reversed_charge+cr_store_credit) as refund
-  from postgresql.public.catalog_sales
-      ,cassandra.adis.catalog_returns
+  from catalog_sales
+      ,catalog_returns
   where cs_item_sk = cr_item_sk
     and cs_order_number = cr_order_number
   group by cs_item_sk
@@ -28,24 +28,24 @@ cross_sales as
      ,sum(ss_wholesale_cost) s1
      ,sum(ss_list_price) s2
      ,sum(ss_coupon_amt) s3
-  FROM   postgresql.public.store_sales
-        ,cassandra.adis.store_returns
+  FROM   store_sales
+        ,store_returns
         ,cs_ui
-        ,postgresql.public.date_dim d1
-        ,postgresql.public.date_dim d2
-        ,postgresql.public.date_dim d3
-        ,postgresql.public.store
-        ,mongodb.adis.customer
-        ,postgresql.public.customer_demographics cd1
-        ,postgresql.public.customer_demographics cd2
-        ,mongodb.adis.promotion
-        ,mongodb.adis.household_demographics hd1
-        ,mongodb.adis.household_demographics hd2
-        ,mongodb.adis.customer_address ad1
-        ,mongodb.adis.customer_address ad2
-        ,mongodb.adis.income_band ib1
-        ,mongodb.adis.income_band ib2
-        ,postgresql.public.item
+        ,date_dim d1
+        ,date_dim d2
+        ,date_dim d3
+        ,store
+        ,customer
+        ,customer_demographics cd1
+        ,customer_demographics cd2
+        ,promotion
+        ,household_demographics hd1
+        ,household_demographics hd2
+        ,customer_address ad1
+        ,customer_address ad2
+        ,income_band ib1
+        ,income_band ib2
+        ,item
   WHERE  ss_store_sk = s_store_sk AND
          ss_sold_date_sk = d1.d_date_sk AND
          ss_customer_sk = c_customer_sk AND
