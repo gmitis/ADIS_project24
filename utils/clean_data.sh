@@ -22,7 +22,6 @@ temp_file="${input_file}.tmp"
 # Remove the last character of every line using sed and replace , with .
 sed -n 's/|$//' "$input_file" 
 sed -i 's/,/-/g' "$input_file"
-iconv -f current_encoding -t utf-8 /path/to/customer.csv -o /path/to/customer_utf8.csv
 
 
 echo "Last character removed from every line of '$input_file'."
