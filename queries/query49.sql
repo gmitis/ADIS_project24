@@ -116,7 +116,7 @@ select  channel, item, return_ratio, return_rank, currency_rank from
                          and d_moy = 12
  		group by sts.ss_item_sk
  	) in_store
- ) postgresql.public.store
+ ) store
  where  (
  store.return_rank <= 10
  or 
