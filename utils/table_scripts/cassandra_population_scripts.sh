@@ -30,7 +30,7 @@ create_files() {
         fields=$($HOME/ADIS_project24/utils/generate_fields.sh "$table")
 
         # copy population command to file 
-        printf "COPY $table("$fields")\nFROM '${data_dir}/${table}.csv'\nWITH HEADER=TRUE AND NULL='';\n" >> "$cql_file"
+        printf "COPY $table("$fields")\nFROM '${data_dir}/${table}.csv'\nWITH NULL='';\n" >> "$cql_file"
         printf "\n" >> "$cql_file"
 
         echo "Created $table.cql"
