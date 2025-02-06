@@ -22,14 +22,7 @@
 > This paper benchmarks the performance of the
 distributed SQL query engine PrestoDB when connected to three heterogeneous data sources: MongoDB, Cassandra, and PostgreSQL. The study examines the effectiveness of the query engine across varying data distribution strategies, worker configurations, and query complexities. Using the TPC-DS benchmark for data and query generation, we conduct experiments on a subset of queries to analyze and enhance query latency, bandwidth, and memory utilization. The findings culminate in a proposed optimization strategy that considers the entity-relationship model, query performance, and the unique characteristics of the underlying storage technologies
 [read more]()
-![PrestoDB Badge](https://img.shields.io/badge/PrestoDB-5890FF?style=for-the-badge&logo=prestodb&logoColor=white)
-![PostgreSQL Badge](https://img.shields.io/badge/PostgreSQL-336791?style=for-the-badge&logo=postgresql&logoColor=white)
-![MongoDB Badge](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)
-![Cassandra Badge](https://img.shields.io/badge/Cassandra-1287B1?style=for-the-badge&logo=apache-cassandra&logoColor=white)
-![Bash Badge](https://img.shields.io/badge/Bash-4EAA25?style=for-the-badge&logo=gnubash&logoColor=white)
-![SQL Badge](https://img.shields.io/badge/SQL-4479A1?style=for-the-badge&logo=sqlite&logoColor=white)
-![Docker Badge](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
-![Docker Swarm Badge](https://img.shields.io/badge/Docker_Swarm-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+
 <br><br>
 
 
@@ -37,7 +30,7 @@ distributed SQL query engine PrestoDB when connected to three heterogeneous data
 This is an indicative configuration used for our experiment with 1 coordinator, 3 workers, PostgreSQL, Cassandra and MongoDB.
 
 | VM       | Cores |          CPU type     | System RAM | Disk Size | Disk Type     | Role                | Additional processes | Cluster Nodes (Docker Swarm) |
-|----------|-------|-----------------------|------------|-----------|---------------|---------------------|----------------------|------------------------------|
+|:--------:|:-----:|:---------------------:|:----------:|:---------:|:-------------:|:-------------------:|:--------------------:|:----------------------------:|
 | adis1    | 4     | Intel Xeon E5-2650 v3 |8 GB        | 30 GB     |HDD            | coordinator         |         -            |  manager                     |
 | adis2    | 4     | Intel Xeon E5-2650 v3 |8 GB        | 30 GB     |HDD            | worker1             | MongoDB              |  worker                      |
 | adis3    | 4     | Intel Xeon E5-2650 v3 |8 GB        | 30 GB     |HDD            | worker2             | Cassandra            |  worker                      |
@@ -292,11 +285,12 @@ You can use a web UI to see how presto queries run and manage them in general by
 ![PostgreSQL Badge](https://img.shields.io/badge/PostgreSQL-336791?style=for-the-badge&logo=postgresql&logoColor=white)
 ![MongoDB Badge](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)
 ![Cassandra Badge](https://img.shields.io/badge/Cassandra-1287B1?style=for-the-badge&logo=apache-cassandra&logoColor=white)
+![TPC-DS Badge](https://img.shields.io/badge/TPC--DS-FFA500?style=for-the-badge)
 ![Bash Badge](https://img.shields.io/badge/Bash-4EAA25?style=for-the-badge&logo=gnubash&logoColor=white)
 ![SQL Badge](https://img.shields.io/badge/SQL-4479A1?style=for-the-badge&logo=sqlite&logoColor=white)
 ![Docker Badge](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 ![Docker Swarm Badge](https://img.shields.io/badge/Docker_Swarm-2496ED?style=for-the-badge&logo=docker&logoColor=white)
-![TPC-DS Badge](https://img.shields.io/badge/TPC--DS-FFA500?style=for-the-badge)  
+![Okeanos Badge](https://img.shields.io/badge/Okeanos-0052CC?style=for-the-badge)  
 <br><br>
 
 
