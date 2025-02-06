@@ -25,7 +25,7 @@ create_files() {
             --collection='$table' \
             --type=csv \
             --file=/mongo_data/$table.csv \
-            --fields=' "$fields"' " >> "$mongo_file"
+            --fields='"$fields"' " >> "$mongo_file"
         printf "\n" >> "$mongo_file"
 
         echo "Created $table.sh"
