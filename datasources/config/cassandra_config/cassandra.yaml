@@ -1,0 +1,3 @@
+write_request_timeout_in_ms: 60000
+commitlog_sync: periodic  # Can be `periodic`, `batch`, or `none`
+commitlog_sync_period_in_ms: 3000  # Sync every 10 seconds (only if `periodic`)

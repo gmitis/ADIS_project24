@@ -17,8 +17,6 @@ services:
       - ./queries:/opt/presto-server/etc/queries
     deploy:
       replicas: 1
-      # restart_policy:
-      #   condition: on-failure
       placement:
         constraints:
           - node.labels.role == adis1
@@ -38,8 +36,6 @@ services:
       - ./datasources/catalog:/opt/presto-server/etc/catalog
     deploy:
       replicas: 1
-      # restart_policy:
-      #   condition: on-failure
       placement:
         constraints:
           - node.labels.role == adis2
@@ -59,8 +55,6 @@ services:
       - ./datasources/catalog:/opt/presto-server/etc/catalog
     deploy:
       replicas: 1
-      # restart_policy:
-      #   condition: on-failure
       placement:
         constraints:
           - node.labels.role == adis3
@@ -80,8 +74,6 @@ services:
       - ./datasources/catalog:/opt/presto-server/etc/catalog
     deploy:
       replicas: 1
-      # restart_policy:
-      #   condition: on-failure
       placement:
         constraints:
           - node.labels.role == adis4
@@ -104,8 +96,6 @@ services:
       # - mongo_data:/data/db
     deploy:
       replicas: 1
-      # restart_policy:
-      #   condition: on-failure
       placement:
         constraints:
           - node.labels.role == adis2
@@ -136,8 +126,6 @@ services:
       retries: 10
     deploy:
       replicas: 1
-      # restart_policy:
-      #   condition: on-failure
       placement:
         constraints:
           - node.labels.role == adis3
@@ -145,21 +133,21 @@ services:
       - presto
 
 
-  cassandra-load-keyspace:
-    container_name: cassandra-load-keyspace
-    image: cassandra:5.0.2-jammy
-    depends_on:
-      - cassandra
-    volumes:
-      - ./datasources/db_population_scripts/cassandra_populate.cql:/cassandra_populate.cql
-      - ./data/csv_data:/data
-    command: /bin/bash -c "echo Loading cassandra keyspace && cqlsh cassandra -f /cassandra_populate.cql"
-    deploy:                                                                       
-      placement:
-        constraints:
-          - node.labels.role == adis3
-    networks:
-      - presto
+  # cassandra-load-keyspace:
+  #   container_name: cassandra-load-keyspace
+  #   image: cassandra:5.0.2-jammy
+  #   depends_on:
+  #     - cassandra
+  #   volumes:
+  #     - ./datasources/db_population_scripts/cassandra_populate.cql:/cassandra_populate.cql
+  #     - ./data/csv_data:/data
+  #   command: /bin/bash -c "echo Loading cassandra keyspace && cqlsh cassandra -f /cassandra_populate.cql"
+  #   deploy:                                                                       
+  #     placement:
+  #       constraints:
+  #         - node.labels.role == adis3
+  #   networks:
+  #     - presto
 
 
   postgres: 
@@ -178,8 +166,6 @@ services:
       - ./data/csv_data:/data
     deploy:
       replicas: 1
-      # restart_policy:
-      #   condition: on-failure
       placement:
         constraints:
           - node.labels.role == adis4
