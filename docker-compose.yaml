@@ -39,7 +39,7 @@ services:
       replicas: 1
       placement:
         constraints:
-          - node.labels.role == adis2
+          - node.labels.role == adis1
     networks:
       - presto
 
@@ -59,7 +59,7 @@ services:
       replicas: 1
       placement:
         constraints:
-          - node.labels.role == adis3
+          - node.labels.role == adis2
     networks:
       - presto
   
