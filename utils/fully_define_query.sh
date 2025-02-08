@@ -1,17 +1,28 @@
 #!/bin/bash
 
+# ATTENTION: there are some fields inside select statements like select 'store channel' as channel in query80.sql that get replaced as well but it doesn't affect us in the slightest
+
 # Define table lists for each database
 cassandra_tables=("inventory" "store_returns" "web_returns" "catalog_returns" "reason" "ship_mode")  
 mongo_tables=("customer" "customer_address" "household_demographics" "income_band" "promotion" "web_page" "call_center" "dbgen_version" "catalog_page")  
 postgres_tables=("store_sales" "catalog_sales" "web_sales" "date_dim" "item" "warehouse" "time_dim" "store" "web_site" "customer_demographics")  
 
+
 # Check if directory is provided
 if [[ $# -eq 0 ]]; then
     echo "Error: No directory provided!"
-    echo "Usage: $0 valid_path/to/queries_directory "
+    echo "Usage: $0 valid_path/to/queries_directory || $0 valid_path/to/queries_directory mongo_tables_array cassandra_tables_array  postgres_tables_array "
     exit 1
 fi
 
+# if there are 5 parameters then we have arrays of tables for the databases as input
+if [[ $# -eq 5 ]]; then
+    mongo_tables="$2"
+    cassandra_tables="$3"
+    postgres_tables="$4"
+fi
+
+# directory path where queries recide
 SQL_DIR="$1"
 
 # Check if directory exists

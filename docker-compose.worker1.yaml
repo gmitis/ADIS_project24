@@ -1,6 +1,7 @@
 services:
   presto-worker1:
     image: prestodb/presto:latest
+    container_name: presto-worker1
     hostname: presto-worker1
     volumes:
       - ./presto-workers/worker1/configuration/node.properties:/opt/presto-server/etc/node.properties
