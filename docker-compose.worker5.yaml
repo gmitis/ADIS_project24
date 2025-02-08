@@ -1,0 +1,104 @@
+services:
+  presto-worker1:
+    image: prestodb/presto:latest
+    container_name: presto-worker1
+    hostname: presto-worker1
+    volumes:
+      - ./presto-workers/worker1/configuration/node.properties:/opt/presto-server/etc/node.properties
+      - ./presto-workers/worker1/configuration/jvm.config:/opt/presto-server/etc/jvm.config
+      - ./presto-workers/worker1/configuration/log.properties:/opt/presto-server/etc/log.properties
+      - ./presto-workers/worker1/configuration/config.properties:/opt/presto-server/etc/config.properties
+      - ./datasources/catalog:/opt/presto-server/etc/catalog
+      - ./presto-spill:/tmp/presto-spill
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.labels.role == adis2
+    networks:
+      - cluster_presto
+
+  
+  presto-worker2:
+    image: prestodb/presto:latest
+    container_name: presto-worker2
+    hostname: presto-worker2
+    volumes:
+      - ./presto-workers/worker2/configuration/node.properties:/opt/presto-server/etc/node.properties
+      - ./presto-workers/worker2/configuration/jvm.config:/opt/presto-server/etc/jvm.config
+      - ./presto-workers/worker2/configuration/log.properties:/opt/presto-server/etc/log.properties
+      - ./presto-workers/worker2/configuration/config.properties:/opt/presto-server/etc/config.properties
+      - ./datasources/catalog:/opt/presto-server/etc/catalog
+      - ./presto-spill:/tmp/presto-spill
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.labels.role == adis3
+    networks:
+      - cluster_presto
+  
+  
+  presto-worker3:
+    image: prestodb/presto:latest
+    container_name: presto-worker3
+    hostname: presto-worker3
+    volumes:
+      - ./presto-workers/worker3/configuration/node.properties:/opt/presto-server/etc/node.properties
+      - ./presto-workers/worker3/configuration/jvm.config:/opt/presto-server/etc/jvm.config
+      - ./presto-workers/worker3/configuration/log.properties:/opt/presto-server/etc/log.properties
+      - ./presto-workers/worker3/configuration/config.properties:/opt/presto-server/etc/config.properties
+      - ./datasources/catalog:/opt/presto-server/etc/catalog
+      - ./presto-spill:/tmp/presto-spill
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.labels.role == adis4
+    networks:
+      - cluster_presto
+  
+
+  presto-worker4:
+    image: prestodb/presto:latest
+    container_name: presto-worker4
+    hostname: presto-worker4
+    volumes:
+      - ./presto-workers/worker4/configuration/node.properties:/opt/presto-server/etc/node.properties
+      - ./presto-workers/worker4/configuration/jvm.config:/opt/presto-server/etc/jvm.config
+      - ./presto-workers/worker4/configuration/log.properties:/opt/presto-server/etc/log.properties
+      - ./presto-workers/worker4/configuration/config.properties:/opt/presto-server/etc/config.properties
+      - ./datasources/catalog:/opt/presto-server/etc/catalog
+      - ./presto-spill:/tmp/presto-spill
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.labels.role == adis1
+    networks:
+      - cluster_presto
+  
+
+  presto-worker5:
+    image: prestodb/presto:latest
+    container_name: presto-worker5
+    hostname: presto-worker5
+    volumes:
+      - ./presto-workers/worker5/configuration/node.properties:/opt/presto-server/etc/node.properties
+      - ./presto-workers/worker5/configuration/jvm.config:/opt/presto-server/etc/jvm.config
+      - ./presto-workers/worker5/configuration/log.properties:/opt/presto-server/etc/log.properties
+      - ./presto-workers/worker5/configuration/config.properties:/opt/presto-server/etc/config.properties
+      - ./datasources/catalog:/opt/presto-server/etc/catalog
+      - ./presto-spill:/tmp/presto-spill
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.labels.role == adis2
+    networks:
+      - cluster_presto
+
+
+networks:
+  cluster_presto:
+    external: true 
