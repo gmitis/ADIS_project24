@@ -9,3 +9,5 @@ DSGen/
 datasources/db_population_scripts/*
 *log*
 INFO.md
+presto-spill
+
