@@ -82,7 +82,7 @@ sudo chmod +x /usr/local/bin/docker-compose
 docker-compose --version
 ```
 
-### Step 2: Clone necessarry repositories
+### Step 2: Clone necessary repositories
 ```bash
 sudo apt update && sudo apt install git
 
@@ -171,6 +171,9 @@ ifconfig | grep inet
 
 # step a: create an ssh tunneling service so that adis2 and adis4 can communicate with adis1 and make It Persistent at Startup
 crontab -e 
+
+# create a presto-spill directory to every VM include, usefull for the spilling of data when the RAM is full
+mkdir -p ~/ADIS_project24/presto-spill
 
 # step b: then add following lines, save document and exit
 # for our use case adis2 and adis4 didn't have connection to the internet via ipv4
