@@ -8,7 +8,7 @@ with ss as
       postgresql.public.store
  where ss_sold_date_sk = d_date_sk
        and d_date between cast('1998-08-04' as date) 
-                  and (cast('1998-08-04' as date) + INTERVAL '30' DAY) 
+                  and (cast('1998-08-04' as date) +  INTERVAL '30' DAY) 
        and ss_store_sk = s_store_sk
  group by s_store_sk)
  ,
@@ -16,23 +16,23 @@ with ss as
  (select s_store_sk,
          sum(sr_return_amt) as returns,
          sum(sr_net_loss) as profit_loss
- from cassandra.adis.store_returns,
+ from postgresql.public.store_returns,
       postgresql.public.date_dim,
       postgresql.public.store
  where sr_returned_date_sk = d_date_sk
        and d_date between cast('1998-08-04' as date)
-                  and (cast('1998-08-04' as date) + INTERVAL '30' DAY)
+                  and (cast('1998-08-04' as date) +  INTERVAL '30' DAY)
        and sr_store_sk = s_store_sk
  group by s_store_sk), 
  cs as
  (select cs_call_center_sk,
         sum(cs_ext_sales_price) as sales,
         sum(cs_net_profit) as profit
- from postgresql.public.catalog_sales,
+ from cassandra.adis.catalog_sales,
       postgresql.public.date_dim
  where cs_sold_date_sk = d_date_sk
        and d_date between cast('1998-08-04' as date)
-                  and (cast('1998-08-04' as date) + INTERVAL '30' DAY)
+                  and (cast('1998-08-04' as date) +  INTERVAL '30' DAY)
  group by cs_call_center_sk 
  ), 
  cr as
@@ -43,31 +43,31 @@ with ss as
       postgresql.public.date_dim
  where cr_returned_date_sk = d_date_sk
        and d_date between cast('1998-08-04' as date)
-                  and (cast('1998-08-04' as date) + INTERVAL '30' DAY)
+                  and (cast('1998-08-04' as date) +  INTERVAL '30' DAY)
  group by cr_call_center_sk
  ), 
  ws as
  ( select wp_web_page_sk,
         sum(ws_ext_sales_price) as sales,
         sum(ws_net_profit) as profit
- from postgresql.public.web_sales,
+ from mongodb.adis.web_sales,
       postgresql.public.date_dim,
       mongodb.adis.web_page
  where ws_sold_date_sk = d_date_sk
        and d_date between cast('1998-08-04' as date)
-                  and (cast('1998-08-04' as date) + INTERVAL '30' DAY)
+                  and (cast('1998-08-04' as date) +  INTERVAL '30' DAY)
        and ws_web_page_sk = wp_web_page_sk
  group by wp_web_page_sk), 
  wr as
  (select wp_web_page_sk,
         sum(wr_return_amt) as returns,
         sum(wr_net_loss) as profit_loss
- from cassandra.adis.web_returns,
+ from mongodb.adis.web_returns,
       postgresql.public.date_dim,
       mongodb.adis.web_page
  where wr_returned_date_sk = d_date_sk
        and d_date between cast('1998-08-04' as date)
-                  and (cast('1998-08-04' as date) + INTERVAL '30' DAY)
+                  and (cast('1998-08-04' as date) +  INTERVAL '30' DAY)
        and wr_web_page_sk = wp_web_page_sk
  group by wp_web_page_sk)
   select  channel
