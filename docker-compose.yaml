@@ -1,0 +1,248 @@
+services:
+  presto-coordinator:
+    image: prestodb/presto:latest
+    container_name: presto-coordinator
+    hostname: presto-coordinator
+    ports:
+      - "8080:8080"
+    environment:
+      - CATALOG_MANAGEMENT=dynamic
+    volumes:
+      - ./presto-coordinator/configuration/node.properties:/opt/presto-server/etc/node.properties
+      - ./presto-coordinator/configuration/jvm.config:/opt/presto-server/etc/jvm.config
+      - ./presto-coordinator/configuration/log.properties:/opt/presto-server/etc/log.properties
+      - ./presto-coordinator/configuration/config.properties:/opt/presto-server/etc/config.properties
+      - ./other_data:/opt/presto-server/etc/other_data
+      - ./datasources/catalog:/opt/presto-server/etc/catalog
+      - ./queries:/opt/presto-server/etc/queries
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.labels.role == adis1
+    networks:
+      - presto
+
+
+  presto-worker1:
+    image: prestodb/presto:latest
+    container_name: presto-worker1
+    hostname: presto-worker1
+    volumes:
+      - ./presto-workers/worker1/configuration/node.properties:/opt/presto-server/etc/node.properties
+      - ./presto-workers/worker1/configuration/jvm.config:/opt/presto-server/etc/jvm.config
+      - ./presto-workers/worker1/configuration/log.properties:/opt/presto-server/etc/log.properties
+      - ./presto-workers/worker1/configuration/config.properties:/opt/presto-server/etc/config.properties
+      - ./datasources/catalog:/opt/presto-server/etc/catalog
+      - ./presto-spill:/tmp/presto-spill
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.labels.role == adis2
+    networks:
+      - presto
+
+  
+  presto-worker2:
+    image: prestodb/presto:latest
+    container_name: presto-worker2
+    hostname: presto-worker2
+    volumes:
+      - ./presto-workers/worker2/configuration/node.properties:/opt/presto-server/etc/node.properties
+      - ./presto-workers/worker2/configuration/jvm.config:/opt/presto-server/etc/jvm.config
+      - ./presto-workers/worker2/configuration/log.properties:/opt/presto-server/etc/log.properties
+      - ./presto-workers/worker2/configuration/config.properties:/opt/presto-server/etc/config.properties
+      - ./datasources/catalog:/opt/presto-server/etc/catalog
+      - ./presto-spill:/tmp/presto-spill
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.labels.role == adis3
+    networks:
+      - presto
+  
+  
+  presto-worker3:
+    image: prestodb/presto:latest
+    container_name: presto-worker3
+    hostname: presto-worker3
+    volumes:
+      - ./presto-workers/worker3/configuration/node.properties:/opt/presto-server/etc/node.properties
+      - ./presto-workers/worker3/configuration/jvm.config:/opt/presto-server/etc/jvm.config
+      - ./presto-workers/worker3/configuration/log.properties:/opt/presto-server/etc/log.properties
+      - ./presto-workers/worker3/configuration/config.properties:/opt/presto-server/etc/config.properties
+      - ./datasources/catalog:/opt/presto-server/etc/catalog
+      - ./presto-spill:/tmp/presto-spill
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.labels.role == adis4
+    networks:
+      - presto
+  
+  # presto-worker4:
+  #   image: prestodb/presto:latest
+  #   container_name: presto-worker4
+  #   hostname: presto-worker4
+  #   volumes:
+  #     - ./presto-workers/worker4/configuration/node.properties:/opt/presto-server/etc/node.properties
+  #     - ./presto-workers/worker4/configuration/jvm.config:/opt/presto-server/etc/jvm.config
+  #     - ./presto-workers/worker4/configuration/log.properties:/opt/presto-server/etc/log.properties
+  #     - ./presto-workers/worker4/configuration/config.properties:/opt/presto-server/etc/config.properties
+  #     - ./datasources/catalog:/opt/presto-server/etc/catalog
+  #     - ./presto-spill:/tmp/presto-spill
+  #   deploy:
+  #     replicas: 1
+  #     placement:
+  #       constraints:
+  #         - node.labels.role == adis1
+  #   networks:
+  #     - presto
+  
+  # presto-worker5:
+  #   image: prestodb/presto:latest
+  #   container_name: presto-worker5
+  #   hostname: presto-worker5
+  #   volumes:
+  #     - ./presto-workers/worker5/configuration/node.properties:/opt/presto-server/etc/node.properties
+  #     - ./presto-workers/worker5/configuration/jvm.config:/opt/presto-server/etc/jvm.config
+  #     - ./presto-workers/worker5/configuration/log.properties:/opt/presto-server/etc/log.properties
+  #     - ./presto-workers/worker5/configuration/config.properties:/opt/presto-server/etc/config.properties
+  #     - ./datasources/catalog:/opt/presto-server/etc/catalog
+  #     - ./presto-spill:/tmp/presto-spill
+  #   deploy:
+  #     replicas: 1
+  #     placement:
+  #       constraints:
+  #         - node.labels.role == adis2
+  #   networks:
+  #     - presto
+  
+  # presto-worker6:
+  #   image: prestodb/presto:latest
+  #   container_name: presto-worker6
+  #   hostname: presto-worker6
+  #   volumes:
+  #     - ./presto-workers/worker6/configuration/node.properties:/opt/presto-server/etc/node.properties
+  #     - ./presto-workers/worker6/configuration/jvm.config:/opt/presto-server/etc/jvm.config
+  #     - ./presto-workers/worker6/configuration/log.properties:/opt/presto-server/etc/log.properties
+  #     - ./presto-workers/worker6/configuration/config.properties:/opt/presto-server/etc/config.properties
+  #     - ./datasources/catalog:/opt/presto-server/etc/catalog
+  #     - ./presto-spill:/tmp/presto-spill
+  #   deploy:
+  #     replicas: 1
+  #     placement:
+  #       constraints:
+  #         - node.labels.role == adis3
+  #   networks:
+  #     - presto
+  
+
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    hostname: mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./datasources/db_population_scripts/mongo_populate.sh:/docker-entrypoint-initdb.d/mongo_populate.sh
+      - ./data/csv_data:/mongo_data
+      - mongo_data:/data/db
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.labels.role == adis2
+    networks:
+      - presto
+
+
+  cassandra:
+    image: cassandra:5.0.2-jammy
+    container_name: cassandra
+    hostname: cassandra
+    environment:
+      - CASSANDRA_CLUSTER_NAME="test"
+      - CASSANDRA_SEEDS=cassandra
+      - CASSANDRA_PASSWORD_SEEDER=true
+      - CASSANDRA_USERNAME=root
+      - CASSANDRA_PASSWORD=root
+    ports:
+      - "9042:9042"
+    volumes:
+      - cassandra_data:/var/lib/cassandra 
+      - ./data/csv_data:/data
+      - ./datasources/db_population_scripts/cassandra_populate.cql:/cassandra_populate.cql
+    healthcheck:
+      test: ["CMD", "cqlsh", "-u root", "-p root", "-e describe keyspaces"]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.labels.role == adis3
+    networks:
+      - presto
+
+
+  # cassandra-load-keyspace:
+  #   container_name: cassandra-load-keyspace
+  #   image: cassandra:5.0.2-jammy
+  #   depends_on:
+  #     - cassandra
+  #   volumes:
+  #     - ./datasources/db_population_scripts/cassandra_populate.cql:/cassandra_populate.cql
+  #     - ./data/csv_data:/data
+  #   command: /bin/bash -c "echo Loading cassandra keyspace && cqlsh cassandra -f /cassandra_populate.cql"
+  #   deploy:                                                                       
+  #     placement:
+  #       constraints:
+  #         - node.labels.role == adis3
+  #   networks:
+  #     - presto
+
+
+  postgres: 
+    image: postgres:17.0
+    container_name: postgres
+    hostname: postgres
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=adis
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./datasources/db_population_scripts/postgres_populate.sql:/docker-entrypoint-initdb.d/postgres_populate.sql
+      - postgres_data:/var/lib/postgresql/data
+      - ./data/csv_data:/data
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.labels.role == adis4
+    networks:
+      - presto
+
+
+networks:
+  presto:
+    driver: overlay
+    attachable: true 
+
+
+volumes:
+  postgres_data:
+    name: postgres_data
+  mongo_data:
+    name: mongo_data
+  cassandra_data:
+    name: cassandra_data

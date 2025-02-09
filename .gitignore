@@ -1,0 +1,13 @@
+*extra_material
+executables*
+*.tmp*
+report
+*notes*
+data/
+other_data
+DSGen/
+datasources/db_population_scripts/*
+*log*
+INFO.md
+presto-spill
+
