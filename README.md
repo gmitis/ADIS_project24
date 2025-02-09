@@ -27,7 +27,7 @@ distributed SQL query engine PrestoDB when connected to three heterogeneous data
 
 
 ## System Description 
-This is an indicative configuration used for our experiment with 1 coordinator, 3 workers, PostgreSQL, Cassandra and MongoDB.
+This is an indicative configuration used for our experiment with 1 coordinator, 3 workers, PostgreSQL, Cassandra and MongoDB. More experiments with different data distributions across the datasources and number of workers have been done.
 
 | VM       | Cores |          CPU type     | System RAM | Disk Size | Disk Type     | Role                | Additional processes | Cluster Nodes (Docker Swarm) |
 |:--------:|:-----:|:---------------------:|:----------:|:---------:|:-------------:|:-------------------:|:--------------------:|:----------------------------:|
@@ -40,7 +40,7 @@ This is an indicative configuration used for our experiment with 1 coordinator, 
 
 
 ## System Deployment
-For the deployment of the services we are using docker-compose in unison with docker swarm. To deploy the system on your machine follow the next steps:
+For the deployment of the services we are using docker-compose in unison with docker swarm for the management of the cluster resources. To deploy the system on your machine follow the next steps:
 
 ### Step 1: Install dependencies
 
@@ -72,6 +72,8 @@ sudo reboot
 
 #### Install docker-compose
 ```bash
+sudo apt update
+sudo apt install curl
 sudo curl -L "https://github.com/docker/compose/releases/download/$(curl -s https://api.github.com/repos/docker/compose/releases/latest | jq -r .tag_name)/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 
 sudo chmod +x /usr/local/bin/docker-compose
@@ -84,7 +86,7 @@ docker-compose --version
 ```bash
 sudo apt update && sudo apt install git
 
-# clone ADIS project
+# clone ADIS project it is necessary for the project to reside into home directory of the user
 cd ~/
 git clone https://github.com/gmitis/ADIS_project24
 
