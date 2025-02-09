@@ -2,7 +2,7 @@
 with cs_ui as
  (select cs_item_sk
         ,sum(cs_ext_list_price) as sale,sum(cr_refunded_cash+cr_reversed_charge+cr_store_credit) as refund
-  from postgresql.public.catalog_sales
+  from cassandra.adis.catalog_sales
       ,cassandra.adis.catalog_returns
   where cs_item_sk = cr_item_sk
     and cs_order_number = cr_order_number
@@ -29,20 +29,20 @@ cross_sales as
      ,sum(ss_list_price) s2
      ,sum(ss_coupon_amt) s3
   FROM   postgresql.public.store_sales
-        ,cassandra.adis.store_returns
+        ,postgresql.public.store_returns
         ,cs_ui
         ,postgresql.public.date_dim d1
         ,postgresql.public.date_dim d2
         ,postgresql.public.date_dim d3
         ,postgresql.public.store
-        ,mongodb.adis.customer
+        ,postgresql.public.customer
         ,postgresql.public.customer_demographics cd1
         ,postgresql.public.customer_demographics cd2
         ,mongodb.adis.promotion
-        ,mongodb.adis.household_demographics hd1
-        ,mongodb.adis.household_demographics hd2
-        ,mongodb.adis.customer_address ad1
-        ,mongodb.adis.customer_address ad2
+        ,cassandra.adis.household_demographics hd1
+        ,cassandra.adis.household_demographics hd2
+        ,postgresql.public.customer_address ad1
+        ,postgresql.public.customer_address ad2
         ,mongodb.adis.income_band ib1
         ,mongodb.adis.income_band ib2
         ,postgresql.public.item

@@ -23,7 +23,7 @@ with
           ics.i_class_id,
           ics.i_category_id
         from
-          postgresql.public.catalog_sales,
+          cassandra.adis.catalog_sales,
           postgresql.public.item ics,
           postgresql.public.date_dim d2
         where
@@ -36,7 +36,7 @@ with
           iws.i_class_id,
           iws.i_category_id
         from
-          postgresql.public.web_sales,
+          mongodb.adis.web_sales,
           postgresql.public.item iws,
           postgresql.public.date_dim d3
         where
@@ -68,7 +68,7 @@ with
           cs_quantity quantity,
           cs_list_price list_price
         from
-          postgresql.public.catalog_sales,
+          cassandra.adis.catalog_sales,
           postgresql.public.date_dim
         where
           cs_sold_date_sk = d_date_sk
@@ -78,7 +78,7 @@ with
           ws_quantity quantity,
           ws_list_price list_price
         from
-          postgresql.public.web_sales,
+          mongodb.adis.web_sales,
           postgresql.public.date_dim
         where
           ws_sold_date_sk = d_date_sk
@@ -136,7 +136,7 @@ from
       sum(cs_quantity * cs_list_price) sales,
       count(*) number_sales
     from
-      postgresql.public.catalog_sales,
+      cassandra.adis.catalog_sales,
       postgresql.public.item,
       postgresql.public.date_dim
     where
@@ -170,7 +170,7 @@ from
       sum(ws_quantity * ws_list_price) sales,
       count(*) number_sales
     from
-      postgresql.public.web_sales,
+      mongodb.adis.web_sales,
       postgresql.public.item,
       postgresql.public.date_dim
     where
@@ -231,7 +231,7 @@ with
           ics.i_class_id,
           ics.i_category_id
         from
-          postgresql.public.catalog_sales,
+          cassandra.adis.catalog_sales,
           postgresql.public.item ics,
           postgresql.public.date_dim d2
         where
@@ -244,7 +244,7 @@ with
           iws.i_class_id,
           iws.i_category_id
         from
-          postgresql.public.web_sales,
+          mongodb.adis.web_sales,
           postgresql.public.item iws,
           postgresql.public.date_dim d3
         where
@@ -276,7 +276,7 @@ with
           cs_quantity quantity,
           cs_list_price list_price
         from
-          postgresql.public.catalog_sales,
+          cassandra.adis.catalog_sales,
           postgresql.public.date_dim
         where
           cs_sold_date_sk = d_date_sk
@@ -286,7 +286,7 @@ with
           ws_quantity quantity,
           ws_list_price list_price
         from
-          postgresql.public.web_sales,
+          mongodb.adis.web_sales,
           postgresql.public.date_dim
         where
           ws_sold_date_sk = d_date_sk

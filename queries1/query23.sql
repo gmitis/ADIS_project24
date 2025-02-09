@@ -13,7 +13,7 @@ with frequent_ss_items as
  (select max(csales) tpcds_cmax 
   from (select c_customer_sk,sum(ss_quantity*ss_sales_price) csales
         from postgresql.public.store_sales
-            ,postgresql.public.customer
+            ,mongodb.adis.customer
             ,postgresql.public.date_dim 
         where ss_customer_sk = c_customer_sk
          and ss_sold_date_sk = d_date_sk
@@ -22,7 +22,7 @@ with frequent_ss_items as
  best_ss_customer as
  (select c_customer_sk,sum(ss_quantity*ss_sales_price) ssales
   from postgresql.public.store_sales
-      ,postgresql.public.customer
+      ,mongodb.adis.customer
   where ss_customer_sk = c_customer_sk
   group by c_customer_sk
   having sum(ss_quantity*ss_sales_price) > (95/100.0) * (select
@@ -31,7 +31,7 @@ from
  max_store_sales))
   select  sum(sales)
  from (select cs_quantity*cs_list_price sales
-       from cassandra.adis.catalog_sales
+       from postgresql.public.catalog_sales
            ,postgresql.public.date_dim 
        where d_year = 1999 
          and d_moy = 1 
@@ -40,7 +40,7 @@ from
          and cs_bill_customer_sk in (select c_customer_sk from best_ss_customer)
       union all
       select ws_quantity*ws_list_price sales
-       from mongodb.adis.web_sales 
+       from postgresql.public.web_sales 
            ,postgresql.public.date_dim 
        where d_year = 1999 
          and d_moy = 1 
@@ -62,7 +62,7 @@ with frequent_ss_items as
  (select max(csales) tpcds_cmax
   from (select c_customer_sk,sum(ss_quantity*ss_sales_price) csales
         from postgresql.public.store_sales
-            ,postgresql.public.customer
+            ,mongodb.adis.customer
             ,postgresql.public.date_dim 
         where ss_customer_sk = c_customer_sk
          and ss_sold_date_sk = d_date_sk
@@ -71,7 +71,7 @@ with frequent_ss_items as
  best_ss_customer as
  (select c_customer_sk,sum(ss_quantity*ss_sales_price) ssales
   from postgresql.public.store_sales
-      ,postgresql.public.customer
+      ,mongodb.adis.customer
   where ss_customer_sk = c_customer_sk
   group by c_customer_sk
   having sum(ss_quantity*ss_sales_price) > (95/100.0) * (select
@@ -79,8 +79,8 @@ with frequent_ss_items as
  from max_store_sales))
   select  c_last_name,c_first_name,sales
  from (select c_last_name,c_first_name,sum(cs_quantity*cs_list_price) sales
-        from cassandra.adis.catalog_sales
-            ,postgresql.public.customer
+        from postgresql.public.catalog_sales
+            ,mongodb.adis.customer
             ,postgresql.public.date_dim 
         where d_year = 1999 
          and d_moy = 1 
@@ -91,8 +91,8 @@ with frequent_ss_items as
        group by c_last_name,c_first_name
       union all
       select c_last_name,c_first_name,sum(ws_quantity*ws_list_price) sales
-       from mongodb.adis.web_sales
-           ,postgresql.public.customer
+       from postgresql.public.web_sales
+           ,mongodb.adis.customer
            ,postgresql.public.date_dim 
        where d_year = 1999 
          and d_moy = 1 

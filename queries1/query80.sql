@@ -4,7 +4,7 @@ with ssr as
           sum(ss_ext_sales_price) as sales,
           sum(coalesce(sr_return_amt, 0)) as returns,
           sum(ss_net_profit - coalesce(sr_net_loss, 0)) as profit
-  from postgresql.public.store_sales left outer join postgresql.public.store_returns on
+  from postgresql.public.store_sales left outer join cassandra.adis.store_returns on
          (ss_item_sk = sr_item_sk and ss_ticket_number = sr_ticket_number),
      postgresql.public.date_dim,
      postgresql.public.store,
@@ -12,7 +12,7 @@ with ssr as
      mongodb.adis.promotion
  where ss_sold_date_sk = d_date_sk
        and d_date between cast('1998-08-04' as date) 
-                  and (cast('1998-08-04' as date) +  INTERVAL '30' DAY)
+                  and (cast('1998-08-04' as date) + INTERVAL '30' DAY)
        and ss_store_sk = s_store_sk
        and ss_item_sk = i_item_sk
        and i_current_price > 50
@@ -25,15 +25,15 @@ with ssr as
           sum(cs_ext_sales_price) as sales,
           sum(coalesce(cr_return_amount, 0)) as returns,
           sum(cs_net_profit - coalesce(cr_net_loss, 0)) as profit
-  from cassandra.adis.catalog_sales left outer join cassandra.adis.catalog_returns on
+  from postgresql.public.catalog_sales left outer join cassandra.adis.catalog_returns on
          (cs_item_sk = cr_item_sk and cs_order_number = cr_order_number),
      postgresql.public.date_dim,
-     cassandra.adis.catalog_page,
+     mongodb.adis.catalog_page,
      postgresql.public.item,
      mongodb.adis.promotion
  where cs_sold_date_sk = d_date_sk
        and d_date between cast('1998-08-04' as date)
-                  and (cast('1998-08-04' as date) +  INTERVAL '30' DAY)
+                  and (cast('1998-08-04' as date) + INTERVAL '30' DAY)
         and cs_catalog_page_sk = cp_catalog_page_sk
        and cs_item_sk = i_item_sk
        and i_current_price > 50
@@ -46,15 +46,15 @@ group by cp_catalog_page_id)
           sum(ws_ext_sales_price) as sales,
           sum(coalesce(wr_return_amt, 0)) as returns,
           sum(ws_net_profit - coalesce(wr_net_loss, 0)) as profit
-  from mongodb.adis.web_sales left outer join mongodb.adis.web_returns on
+  from postgresql.public.web_sales left outer join cassandra.adis.web_returns on
          (ws_item_sk = wr_item_sk and ws_order_number = wr_order_number),
      postgresql.public.date_dim,
-     mongodb.adis.web_site,
+     postgresql.public.web_site,
      postgresql.public.item,
      mongodb.adis.promotion
  where ws_sold_date_sk = d_date_sk
        and d_date between cast('1998-08-04' as date)
-                  and (cast('1998-08-04' as date) +  INTERVAL '30' DAY)
+                  and (cast('1998-08-04' as date) + INTERVAL '30' DAY)
         and ws_web_site_sk = web_site_sk
        and ws_item_sk = i_item_sk
        and i_current_price > 50

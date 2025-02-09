@@ -1,3 +1,4 @@
+
 select  channel, item, return_ratio, return_rank, currency_rank from
  (select
  'web' as channel
@@ -19,7 +20,7 @@ select  channel, item, return_ratio, return_rank, currency_rank from
  		,(cast(sum(coalesce(wr.wr_return_amt,0)) as decimal(15,4))/
  		cast(sum(coalesce(ws.ws_net_paid,0)) as decimal(15,4) )) as currency_ratio
  		from 
- 		 mongodb.adis.web_sales ws left outer join mongodb.adis.web_returns wr 
+ 		 postgresql.public.web_sales ws left outer join cassandra.adis.web_returns wr 
  			on (ws.ws_order_number = wr.wr_order_number and 
  			ws.ws_item_sk = wr.wr_item_sk)
                  ,postgresql.public.date_dim
@@ -62,7 +63,7 @@ select  channel, item, return_ratio, return_rank, currency_rank from
  		,(cast(sum(coalesce(cr.cr_return_amount,0)) as decimal(15,4))/
  		cast(sum(coalesce(cs.cs_net_paid,0)) as decimal(15,4) )) as currency_ratio
  		from 
- 		cassandra.adis.catalog_sales cs left outer join cassandra.adis.catalog_returns cr
+ 		postgresql.public.catalog_sales cs left outer join cassandra.adis.catalog_returns cr
  			on (cs.cs_order_number = cr.cr_order_number and 
  			cs.cs_item_sk = cr.cr_item_sk)
                 ,postgresql.public.date_dim
@@ -102,7 +103,7 @@ select  channel, item, return_ratio, return_rank, currency_rank from
  		,(cast(sum(coalesce(sr.sr_return_quantity,0)) as decimal(15,4))/cast(sum(coalesce(sts.ss_quantity,0)) as decimal(15,4) )) as return_ratio
  		,(cast(sum(coalesce(sr.sr_return_amt,0)) as decimal(15,4))/cast(sum(coalesce(sts.ss_net_paid,0)) as decimal(15,4) )) as currency_ratio
  		from 
- 		postgresql.public.store_sales sts left outer join postgresql.public.store_returns sr
+ 		postgresql.public.store_sales sts left outer join cassandra.adis.store_returns sr
  			on (sts.ss_ticket_number = sr.sr_ticket_number and sts.ss_item_sk = sr.sr_item_sk)
                 ,postgresql.public.date_dim
  		where 
@@ -124,3 +125,5 @@ select  channel, item, return_ratio, return_rank, currency_rank from
  )
  order by 1,4,5,2
  limit 100;
+
+

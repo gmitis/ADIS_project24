@@ -44,7 +44,7 @@ select case when (select count(*)
             else (select avg(ss_net_paid_inc_tax)
                   from postgresql.public.store_sales
                   where ss_quantity between 81 and 100) end bucket5
-from mongodb.adis.reason
+from cassandra.adis.reason
 where r_reason_sk = 1
 ;
 
