@@ -21,7 +21,7 @@
 ## Project Description
 > This paper benchmarks the performance of the
 distributed SQL query engine PrestoDB when connected to three heterogeneous data sources: MongoDB, Cassandra, and PostgreSQL. The study examines the effectiveness of the query engine across varying data distribution strategies, worker configurations, and query complexities. Using the TPC-DS benchmark for data and query generation, we conduct experiments on a subset of queries to analyze and enhance query latency, bandwidth, and memory utilization. The findings culminate in a proposed optimization strategy that considers the entity-relationship model, query performance, and the unique characteristics of the underlying storage technologies
-[read more]()
+[read more](https://github.com/gmitis/ADIS_project24/blob/main/presto_report.pdf)
 
 <br><br>
 
