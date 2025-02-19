@@ -260,6 +260,8 @@ docker service logs -f [database_cluster_name]
 
 # or run queries from inside the presto-coordinator
 docker exec -it presto-coordinator bash
+./opt/presto-cli --catalog postgresql --schema public  --execute 'show tables;'
+./opt/presto-cli --execute 'select count(*) from {catalog}.{schema}.{table};' 
 ./opt/presto-cli --execute 'select * from {catalog}.{schema}.{table} limit 100;' 
 
 
